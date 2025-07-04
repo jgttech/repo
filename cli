@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+# Enables "development" mode.
+export REPO_MODE=1
+
+go run main.go $@

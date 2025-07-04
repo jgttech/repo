@@ -1,0 +1,4 @@
+{
+  "version": "0.0.1",
+  "providers": ["gh@github.com", "git@gitlab.com"]
+}

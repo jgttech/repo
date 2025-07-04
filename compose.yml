@@ -1,0 +1,16 @@
+services:
+  arch:
+    build:
+      dockerfile: Dockerfile.arch
+    environment:
+      - TERM=xterm-256color
+      - UV_CACHE_DIR=/tmp/.cache/uv
+      - UV_PROJECT_ENVIRONMENT=/tmp/.venv
+    stdin_open: true
+    tty: true
+    working_dir: /home/user
+    volumes:
+      - .:/home/user/.repocli
+    tmpfs:
+      - /home/user/.dotfiles/.build:uid=1000,gid=1000,exec
+    command: bash -c "sleep infinity"
