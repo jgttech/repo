@@ -1,4 +1,4 @@
-package install
+package add
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 )
 
 var Command = &cli.Command{
-	Name: "install",
+	Name: "add",
 	Action: func(ctx context.Context, c *cli.Command) (err error) {
-		fmt.Println("INSTALL")
+		fmt.Println("add <arg>:", c.Args().First())
 		return
 	},
 }

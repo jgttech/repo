@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo="https://github.com/jgttech/repo"
+root="$HOME/.repocli"
+build=".build/repo"
+
+# Where the brew and go CLI are located.
+brew="/home/linuxbrew/.linuxbrew/bin/brew"
+go="/home/linuxbrew/.linuxbrew/Cellar/go"
+
+function is_installed {
+  # Check if a value is provided.
+  if [ -z "$1" ]; then
+    return 1
+  fi
+
+  # Try checking the 'type'. This
+  # is builtin and reliable, generally.
+  if type "$1" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  # Fallback to 'which'.
+  if which "$1" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  # Last resort: try to execute with --version or --help
+  # (some programs exist but aren't in PATH detection).
+  if "$1" --version >/dev/null 2>&1 || "$1" --help >/dev/null 2>&1; then
+    return 0
+  fi
+
+  return 1
+}
+
+# Clone the repo, if it does not already exist.
+if [[ ! -d "$root" ]]; then
+  git clone "$repo" "$root"
+fi
+
+if ! is_installed go; then
+  echo "[ERROR]"
+  echo "Missing required system dependency:"
+  echo "- go"
+  echo ""
+  echo "Please install the missing system"
+  echo "dependencies and re-run this install"
+  echo "script."
+  exit 1
+fi
+
+wd=$(pwd)
+cd $root
+
+go build -o $build main.go
+$root/$build install
+
+cd $wd
