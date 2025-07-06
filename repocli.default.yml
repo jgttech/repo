@@ -1,0 +1,9 @@
+# repo set branches.primary master
+branches:
+  primary: main
+
+# repo add
+# repo add --alias foo
+# repo add ~/path/to/repo
+# repo add ~/path/to/repo --alias bar
+repositories: []

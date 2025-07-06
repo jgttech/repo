@@ -1,1 +1,7 @@
 version: 0.0.1
+config:
+  path: ${HOME}/.config/repocli
+  name: repocli.yml
+bin:
+  path: ${HOME}/.local/bin
+  name: repo

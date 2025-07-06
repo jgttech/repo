@@ -47,7 +47,8 @@ func newContext() (ctx *context) {
 		ctx.Conf = path.Join(dev, file)
 	}
 
-	ctx.Yaml = newYaml(ctx.Conf)
+	yamlConf := newYamlConf(ctx.Conf)
+	ctx.Yaml = yamlConf
 
 	return
 }
