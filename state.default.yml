@@ -1,0 +1,38 @@
+created_at: 83245637525
+updated_at: 43214532439
+
+# repo add
+# repo add --alias foo
+# repo add ~/path/to/repo
+# repo add ~/path/to/repo --alias bar
+repositories:
+  fda453tgrw4524rtrefda453tgrw4524rtrefda453tgrw4524rtre:
+    path: /foo/bar/baz
+    name: baz
+    alias: boo
+    branch: feat/123
+    primary: main
+    created_at: 54254234547
+    updates_at: 56286756524
+  xtasie490uhfkd74trxtasie490uhfkd74trxtasie490uhfkd74tr:
+    path: /baz/foo/bar
+    name: bar
+    alias:
+    branch: fix/123
+    primary: main
+    created_at: 54254234547
+    updates_at: 56286756524
+
+# repo set defaults.primary master
+defaults:
+  branch:
+    primary: main
+
+history:
+  max: 5
+  entries:
+    - 0123456789@fda453tgrw4524rtrefda453tgrw4524rtrefda453tgrw4524rtre
+    - 1234566543@fda453tgrw4524rtrefda453tgrw4524rtrefda453tgrw4524rtre
+    - 2345654323@xtasie490uhfkd74trxtasie490uhfkd74trxtasie490uhfkd74tr
+    - 1234566543@fda453tgrw4524rtrefda453tgrw4524rtrefda453tgrw4524rtre
+    - 2345654323@xtasie490uhfkd74trxtasie490uhfkd74trxtasie490uhfkd74tr

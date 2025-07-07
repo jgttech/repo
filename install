@@ -54,7 +54,7 @@ fi
 wd=$(pwd)
 cd $root
 
+# Build the CLI
 go build -o $build main.go
-$root/$build install
 
 cd $wd

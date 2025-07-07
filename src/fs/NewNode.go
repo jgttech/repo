@@ -24,7 +24,7 @@ func NewNode(nodePath string, opts ...nodeOption) (node *Node) {
 		name := tokens[size-1]
 
 		node.Name = name
-		node.Base = path.Join(tokens[0 : size-1]...)
+		node.Base = os.ExpandEnv(path.Join(tokens[0 : size-1]...))
 
 		if strings.Contains(name, ".") {
 			tokens := strings.Split(name, ".")

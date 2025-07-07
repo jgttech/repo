@@ -2,6 +2,6 @@ package fs
 
 import "github.com/jgttech/repo/src/env"
 
-func FolderType(n *Node) {
-	n.Type = env.FOLDER_NODE
+func FolderType(node *Node) {
+	node.Type = env.FOLDER_NODE
 }

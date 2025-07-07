@@ -6,19 +6,15 @@ import (
 	"strconv"
 
 	"github.com/jgttech/repo/src/assert"
+	"github.com/jgttech/repo/src/cfg"
 	"github.com/jgttech/repo/src/env"
+	"github.com/jgttech/repo/src/fs"
+
+	yml "gopkg.in/yaml.v3"
 )
 
-type context struct {
-	Yaml *yml
-	Pwd  string
-	Home string
-	Conf string
-}
-
-func newContext() (ctx *context) {
-	file := env.REPO_FILE
-	dir := env.REPO_DIR
+func newContext() (ctx *cfg.Context) {
+	ctx = &cfg.Context{}
 	repo_mode := os.Getenv("REPO_MODE")
 
 	if repo_mode == "" {
@@ -26,29 +22,35 @@ func newContext() (ctx *context) {
 	}
 
 	mode := assert.Must(strconv.Atoi(repo_mode))
-	prod := path.Join(os.Getenv("HOME"), dir)
-	dev := path.Join(assert.Must(os.Getwd()))
-	PROD := int(env.REPO_MODE_PROD)
+	filename := env.REPO_FILE
+	dirname := env.REPO_DIR
 
-	ctx = &context{}
-	ctx.Pwd = assert.Must(os.Getwd())
+	prod_mode := int(env.REPO_MODE_PROD)
+	prod_path := path.Join(os.Getenv("HOME"), dirname)
+	dev_path := path.Join(assert.Must(os.Getwd()))
 
 	switch mode {
-	case PROD:
-		ctx.Home = prod
+	case prod_mode:
+		ctx.Home = fs.NewFolder(prod_path)
 	default:
-		ctx.Home = dev
+		ctx.Home = fs.NewFolder(dev_path)
 	}
 
 	switch mode {
-	case PROD:
-		ctx.Conf = path.Join(prod, file)
+	case prod_mode:
+		ctx.Conf = fs.NewFile(path.Join(prod_path, filename))
 	default:
-		ctx.Conf = path.Join(dev, file)
+		ctx.Conf = fs.NewFile(path.Join(dev_path, filename))
 	}
 
-	yamlConf := newYamlConf(ctx.Conf)
-	ctx.Yaml = yamlConf
+	ctx.Pwd = fs.NewFolder(assert.Must(os.Getwd()))
+
+	yaml := &cfg.Yaml{}
+	yml.Unmarshal(assert.Must(os.ReadFile(ctx.Conf.Path)), yaml)
+
+	ctx.Version = yaml.Version
+	ctx.Bin = fs.NewFile(yaml.Bin)
+	ctx.State = fs.NewFile(yaml.State)
 
 	return
 }

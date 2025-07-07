@@ -1,7 +1,3 @@
 version: 0.0.1
-config:
-  path: ${HOME}/.config/repocli
-  name: repocli.yml
-bin:
-  path: ${HOME}/.local/bin
-  name: repo
+state: ${HOME}/.config/repocli/state.yml
+bin: ${HOME}/.local/bin/repo
