@@ -30,6 +30,7 @@ type StateRepository struct {
 	Alias     string    `yaml:"alias"`
 	Branch    string    `yaml:"branch"`
 	Ssh       string    `yaml:"ssh"`
+	Config    string    `yaml:"config"`
 }
 
 type StateDefaults struct {

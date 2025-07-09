@@ -62,6 +62,12 @@ func Command() *cli.Command {
 			repo.UpdatedAt = cfg.Timestamp(timestamp)
 			repo.Branch = branch
 
+			if branch == "" {
+				repo.Branch = self.State.Defaults.Branches.Primary
+			} else {
+				repo.Branch = branch
+			}
+
 			if primary == "" {
 				repo.Primary = self.State.Defaults.Branches.Primary
 			} else {
