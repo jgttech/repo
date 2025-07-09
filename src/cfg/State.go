@@ -26,9 +26,10 @@ type StateRepository struct {
 	UpdatedAt Timestamp `yaml:"updated_at"`
 	Dir       string    `yaml:"dir"`
 	Name      string    `yaml:"name"`
+	Primary   string    `yaml:"primary"`
 	Alias     string    `yaml:"alias"`
 	Branch    string    `yaml:"branch"`
-	Primary   string    `yaml:"primary"`
+	Ssh       string    `yaml:"ssh"`
 }
 
 type StateDefaults struct {
