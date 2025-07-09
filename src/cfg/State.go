@@ -1,7 +1,10 @@
 package cfg
 
 import (
+	"crypto/sha512"
+	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/jgttech/repo/src/assert"
 	"gopkg.in/yaml.v3"
@@ -10,11 +13,12 @@ import (
 type Timestamp int64
 
 type State struct {
-	CreatedAt    Timestamp                  `yaml:"created_at"`
-	UpdatedAt    Timestamp                  `yaml:"updated_at"`
-	Repositories map[string]StateRepository `yaml:"repositories"`
-	Defaults     *StateDefaults             `yaml:"defaults"`
-	History      *StateHistory              `yaml:"history"`
+	Path         string                      `yaml:"-"`
+	CreatedAt    Timestamp                   `yaml:"created_at"`
+	UpdatedAt    Timestamp                   `yaml:"updated_at"`
+	Repositories map[string]*StateRepository `yaml:"repositories"`
+	Defaults     *StateDefaults              `yaml:"defaults"`
+	History      *StateHistory               `yaml:"history"`
 }
 
 type StateRepository struct {
@@ -40,7 +44,8 @@ type StateHistory struct {
 	Entries []string `yaml:"entries"`
 }
 
-func (this *State) Save(filepath string) {
+func (this *State) Save() {
+	filepath := this.Path
 	bytes := assert.Must(yaml.Marshal(this))
 	assert.Throws(os.WriteFile(filepath, bytes, 0700))
 }
@@ -58,4 +63,30 @@ func (this *State) Load(filepath string) (err error) {
 	yaml.Unmarshal(bytes, this)
 
 	return
+}
+
+func (this *State) update(timestamp Timestamp, id string) {
+	this.UpdatedAt = timestamp
+	size := len(this.History.Entries)
+
+	if size >= 5 {
+		history := []string{}
+
+		for _, entry := range this.History.Entries[1:] {
+			history = append(history, entry)
+		}
+
+		this.History.Entries = history
+	}
+
+	entry := fmt.Sprintf("%s@%s", strconv.Itoa(int(timestamp)), id)
+	this.History.Entries = append(this.History.Entries, entry)
+}
+
+func (this *State) AddRepository(repo *StateRepository) {
+	hasher := sha512.New()
+	signature := fmt.Sprintf("%x", hasher.Sum([]byte(repo.Dir)))[0:32]
+
+	this.Repositories[signature] = repo
+	this.update(repo.UpdatedAt, signature)
 }

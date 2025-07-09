@@ -14,8 +14,8 @@ func main() {
 	app := cli.Command{
 		Name: "repo",
 		Commands: []*cli.Command{
-			add.Command,
-			version.Command,
+			add.Command(),
+			version.Command(),
 		},
 	}
 

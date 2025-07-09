@@ -10,7 +10,7 @@ import (
 
 func newState(ctx *cfg.Context) (s *cfg.State) {
 	file := ctx.State
-	s = &cfg.State{}
+	s = &cfg.State{Path: file.Path}
 
 	if file.Exists() {
 		assert.Throws(s.Load(file.Path))
@@ -24,7 +24,7 @@ func newState(ctx *cfg.Context) (s *cfg.State) {
 
 	s.CreatedAt = cfg.Timestamp(timestamp)
 	s.UpdatedAt = cfg.Timestamp(timestamp)
-	s.Repositories = make(map[string]cfg.StateRepository)
+	s.Repositories = make(map[string]*cfg.StateRepository)
 	s.Defaults = &cfg.StateDefaults{
 		Branches: &cfg.StateDefaultsBranches{
 			Primary: "main",
@@ -35,6 +35,6 @@ func newState(ctx *cfg.Context) (s *cfg.State) {
 		Entries: []string{},
 	}
 
-	s.Save(file.Path)
+	s.Save()
 	return
 }
