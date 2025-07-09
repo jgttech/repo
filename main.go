@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/jgttech/repo/cmds/add"
+	"github.com/jgttech/repo/cmds/config"
 	"github.com/jgttech/repo/cmds/version"
 	"github.com/urfave/cli/v3"
 )
@@ -16,6 +17,7 @@ func main() {
 		Commands: []*cli.Command{
 			add.Command(),
 			version.Command(),
+			config.Command(),
 		},
 	}
 
