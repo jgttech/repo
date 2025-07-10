@@ -24,6 +24,7 @@ func newState(ctx *cfg.Context) (s *cfg.State) {
 
 	s.CreatedAt = cfg.Timestamp(timestamp)
 	s.UpdatedAt = cfg.Timestamp(timestamp)
+	s.Backups = []*cfg.StateBackup{}
 	s.Repositories = make(map[string]*cfg.StateRepository)
 	s.Defaults = &cfg.StateDefaults{
 		Branches: &cfg.StateDefaultsBranches{
