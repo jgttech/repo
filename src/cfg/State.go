@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/jgttech/repo/src/assert"
 	"gopkg.in/yaml.v3"
@@ -52,30 +53,10 @@ type StateHistory struct {
 	Entries []string `yaml:"entries"`
 }
 
-func (this *State) Save() {
-	filepath := this.Path
-	bytes := assert.Must(yaml.Marshal(this))
-	assert.Throws(os.WriteFile(filepath, bytes, 0700))
-}
-
-func (this *State) Load(filepath string) (err error) {
-	_, err = os.Stat(filepath)
-
-	if os.IsNotExist(err) {
-		return err
-	}
-
-	err = nil
-
-	bytes := assert.Must(os.ReadFile(filepath))
-	yaml.Unmarshal(bytes, this)
-
-	return
-}
-
 func (this *State) update(timestamp Timestamp, id string) {
-	if this.History.Max > 0 {
-		this.UpdatedAt = timestamp
+	this.UpdatedAt = timestamp
+
+	if this.History.Max > 0 && id != "" {
 		size := len(this.History.Entries)
 
 		if size >= this.History.Max {
@@ -91,6 +72,30 @@ func (this *State) update(timestamp Timestamp, id string) {
 		entry := fmt.Sprintf("%s@%s", strconv.Itoa(int(timestamp)), id)
 		this.History.Entries = append(this.History.Entries, entry)
 	}
+}
+
+func (this *State) Save() {
+	this.update(Timestamp(time.Now().Unix()), "")
+
+	filepath := this.Path
+	bytes := assert.Must(yaml.Marshal(this))
+	assert.Throws(os.WriteFile(filepath, bytes, 0700))
+
+}
+
+func (this *State) Load(filepath string) (err error) {
+	_, err = os.Stat(filepath)
+
+	if os.IsNotExist(err) {
+		return err
+	}
+
+	err = nil
+
+	bytes := assert.Must(os.ReadFile(filepath))
+	yaml.Unmarshal(bytes, this)
+
+	return
 }
 
 func (this *State) AddRepository(repo *StateRepository) {

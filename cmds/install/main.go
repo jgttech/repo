@@ -35,6 +35,14 @@ func Command() *cli.Command {
 							To:   gitconfigBackup,
 						},
 					)
+
+					self.State.Save()
+
+					err = os.Remove(gitconfig)
+					file, create_err := os.Create(gitconfig)
+					err = create_err
+
+					defer file.Close()
 				}
 			}
 
