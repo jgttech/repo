@@ -5,9 +5,9 @@ import (
 	"strings"
 )
 
-type cmdOptions func(*exec.Cmd)
+type cmdOption func(*exec.Cmd)
 
-func Cmd(cmd string, opts ...cmdOptions) *exec.Cmd {
+func Cmd(cmd string, opts ...cmdOption) *exec.Cmd {
 	var args []string
 	var builder strings.Builder
 	var inSingle, inDouble, inBacktick bool

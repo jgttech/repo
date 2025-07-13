@@ -1,3 +1,0 @@
-version: 0.0.1
-state: ${HOME}/.config/repocli/state.yml
-bin: ${HOME}/.local/bin/repo

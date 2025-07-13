@@ -3,6 +3,7 @@
 
 # App
 state.yml
+.repocli/
 
 # macOS
 .DS_Store

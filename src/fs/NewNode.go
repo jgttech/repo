@@ -4,43 +4,39 @@ import (
 	"os"
 	"path"
 	"strings"
-
-	"github.com/jgttech/repo/src/env"
 )
 
-type nodeOption func(*Node)
+func NewNode(target string, opts ...nodeOption) (n *Node) {
+	n = &Node{}
 
-func NewNode(nodePath string, opts ...nodeOption) (node *Node) {
-	node = &Node{}
-
-	if nodePath == "" {
-		node.Base = "/"
-		node.Path = "/"
+	if target == "" {
+		n.Base = "/"
+		n.Path = "/"
 	} else {
-		node.Path = os.ExpandEnv(nodePath)
+		n.Path = os.ExpandEnv(target)
 
-		tokens := strings.Split(nodePath, "/")
+		tokens := strings.Split(target, "/")
 		size := len(tokens)
 		name := tokens[size-1]
 
-		node.Name = name
-		node.Base = os.ExpandEnv(path.Join(tokens[0 : size-1]...))
+		n.Name = name
+		n.Base = os.ExpandEnv(path.Join(tokens[0 : size-1]...))
 
 		if strings.Contains(name, ".") {
 			tokens := strings.Split(name, ".")
 			size := len(tokens)
 			ext := tokens[size-1]
 
-			node.Ext = ext
+			n.Ext = ext
 		}
 
-		if !node.Exists() {
-			node.Type = env.FILE_NODE
+		if !n.Exists() {
+			n.Type = TYPE_FILE
 		}
 	}
 
 	for _, fn := range opts {
-		fn(node)
+		fn(n)
 	}
 
 	return

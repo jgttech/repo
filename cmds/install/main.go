@@ -7,44 +7,37 @@ import (
 	"path"
 	"time"
 
-	"github.com/jgttech/repo/src/cfg"
-	"github.com/jgttech/repo/src/fs"
-	"github.com/jgttech/repo/src/self"
+	"github.com/jgttech/repo/src/env"
+	"github.com/jgttech/repo/src/fs/cp"
 	"github.com/urfave/cli/v3"
 )
 
 func Command() *cli.Command {
+	home := os.Getenv("HOME")
+	timestamp := time.Now().Unix()
+	cliconfig := path.Join(env.BASE_SYMLINK, ".gitconfig")
+	backupName := fmt.Sprintf(".gitconfig.%d.bak", timestamp)
+	gitconfig := path.Join(home, ".gitconfig")
+	backup := path.Join(home, backupName)
+
 	return &cli.Command{
-		Name:        "install",
-		Description: "Does initial setup work for using 'repo' to manage your git repositories.",
+		Name:                  "install",
+		EnableShellCompletion: true,
 		Action: func(ctx context.Context, c *cli.Command) (err error) {
-			timestamp := time.Now().Unix()
-			home := os.Getenv("HOME")
-			gitconfig := path.Join(home, ".gitconfig")
-			gitconfigBackup := path.Join(home, fmt.Sprintf(".gitconfig.%d.bak", timestamp))
-			_, err = os.Stat(gitconfig)
+			_, err = os.Stat(env.BASE_DIR)
 
 			if err == nil {
-				err = fs.CopyFile(gitconfig, gitconfigBackup)
-
-				if err == nil {
-					self.State.Backups = append(
-						self.State.Backups,
-						&cfg.StateBackup{
-							From: gitconfig,
-							To:   gitconfigBackup,
-						},
-					)
-
-					self.State.Save()
-
-					err = os.Remove(gitconfig)
-					file, create_err := os.Create(gitconfig)
-					err = create_err
-
-					defer file.Close()
-				}
+				err = fmt.Errorf("Already installed.")
+				return
+			} else {
+				err = os.MkdirAll(env.BASE_SYMLINK, 0755)
+				err = os.MkdirAll(env.BASE_DATA, 0755)
 			}
+
+			err = cp.File(cp.From(gitconfig), cp.To(backup))
+			err = os.Remove(gitconfig)
+			file, err := os.Create(cliconfig)
+			file.Close()
 
 			return
 		},
