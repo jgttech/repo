@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/jgttech/repo/cmds/install"
 	"github.com/jgttech/repo/cmds/uninstall"
@@ -12,7 +13,13 @@ import (
 
 func main() {
 	app := cli.Command{
-		Name: "repo",
+		Name:    "repo",
+		Usage:   "Git Account Multiplexer",
+		Authors: []any{"jgt.tech@protonmail.com"},
+		Description: strings.Join([]string{
+			"CLI manager for Git + SSH configurations",
+			"across multiple repo's and accounts.",
+		}, "\n"),
 		Commands: []*cli.Command{
 			install.Command(),
 			uninstall.Command(),

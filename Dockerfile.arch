@@ -15,6 +15,7 @@ RUN \
   curl \
   wget \
   vim \
+  go \
   bash \
   sudo \
   man-db \

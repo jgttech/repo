@@ -3,7 +3,7 @@ set -euo pipefail
 
 repo="https://github.com/jgttech/repo"
 root="$HOME/.repocli"
-build="$root/.local/bin/repo"
+build="$root/.build/.local/bin/repo"
 
 # Where the brew and go CLI are located.
 brew="/home/linuxbrew/.linuxbrew/bin/brew"
@@ -58,6 +58,6 @@ cd $root
 go build -o $build main.go
 
 # Install the CLI
-$build install --cwd $root
+$build install
 
 cd $wd
