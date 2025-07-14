@@ -30,8 +30,14 @@ func NewNode(target string, opts ...nodeOption) (n *Node) {
 			n.Ext = ext
 		}
 
-		if !n.Exists() {
-			n.Type = TYPE_FILE
+		stat, err := os.Stat(n.Path)
+
+		if err == nil {
+			if stat.IsDir() {
+				n.Type = TYPE_FOLDER
+			} else {
+				n.Type = TYPE_FILE
+			}
 		}
 	}
 

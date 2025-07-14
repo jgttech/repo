@@ -7,37 +7,70 @@ import (
 	"path"
 	"time"
 
+	"github.com/jgttech/repo/src/assert"
 	"github.com/jgttech/repo/src/env"
+	"github.com/jgttech/repo/src/exec"
+	"github.com/jgttech/repo/src/fs"
 	"github.com/jgttech/repo/src/fs/cp"
+	"github.com/jgttech/repo/src/state"
 	"github.com/urfave/cli/v3"
 )
 
 func Command() *cli.Command {
-	home := os.Getenv("HOME")
+	cwd := assert.Must(os.Getwd())
 	timestamp := time.Now().Unix()
-	cliconfig := path.Join(env.BASE_SYMLINK, ".gitconfig")
+	home := os.Getenv("HOME")
 	backupName := fmt.Sprintf(".gitconfig.%d.bak", timestamp)
-	gitconfig := path.Join(home, ".gitconfig")
-	backup := path.Join(home, backupName)
+	gitConfigPath := path.Join(home, ".gitconfig")
+	gitBackupPath := path.Join(home, backupName)
+	gitConfig := fs.NewNode(path.Join(env.BASE_DIR, ".gitconfig"), fs.File)
 
 	return &cli.Command{
 		Name:                  "install",
 		EnableShellCompletion: true,
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "cwd",
+				Destination: &cwd,
+			},
+		},
 		Action: func(ctx context.Context, c *cli.Command) (err error) {
 			_, err = os.Stat(env.BASE_DIR)
 
 			if err == nil {
 				err = fmt.Errorf("Already installed.")
 				return
-			} else {
-				err = os.MkdirAll(env.BASE_SYMLINK, 0755)
-				err = os.MkdirAll(env.BASE_DATA, 0755)
 			}
 
-			err = cp.File(cp.From(gitconfig), cp.To(backup))
-			err = os.Remove(gitconfig)
-			file, err := os.Create(cliconfig)
-			file.Close()
+			err = os.MkdirAll(env.BASE_CONF, 0755)
+			err = cp.File(cp.From(gitConfigPath), cp.To(gitBackupPath))
+			err = os.Remove(gitConfigPath)
+
+			// Create the .gitconfig the CLI manages.
+			gitConfig.Create()
+
+			// Create the new state.
+			s := state.New()
+
+			// Add backed up .gitconfig to install config.
+			s.AddBackup(gitConfigPath, gitBackupPath)
+			s.Save()
+
+			// Make sure the config exists.
+			cliConfig := path.Join(s.Home, env.REPO_CLI)
+			_, err = os.Stat(cliConfig)
+
+			if os.IsNotExist(err) {
+				return
+			}
+
+			// Copy the CLI config into the build.
+			err = cp.File(cp.From(cliConfig), cp.To(env.BASE_CLI))
+
+			// Generate all the symlinks from the build.
+			arg := fmt.Sprintf("stow -t %s %s", home, env.REPO_DIR)
+			cmd := exec.Cmd(arg, exec.Dir(cwd), exec.Stdio)
+			err = cmd.Run()
 
 			return
 		},

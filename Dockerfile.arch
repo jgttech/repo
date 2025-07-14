@@ -1,0 +1,45 @@
+FROM archlinux:latest
+
+# System packages. This should ONLY contain
+# the basic system packages and nothing more.
+# Other 3rd party packages required for the
+# dotfiles should be handled by the dotfiles
+# themselves in order to make sure that the
+# dotfiles can manage the install process
+# for required packages.
+RUN \
+  pacman -Syu --noconfirm && \
+  pacman -S --noconfirm \
+  base-devel \
+  git \
+  curl \
+  wget \
+  vim \
+  bash \
+  sudo \
+  man-db \
+  man-pages && \
+  pacman -Syu --noconfirm
+
+# Makes sure that the user can invoke
+# privilege escalated commands.
+RUN \
+  useradd -m -G wheel -s /bin/bash user && \
+  echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Creates a user to emulate a real user
+# use case.
+USER user
+WORKDIR /home/user
+
+# Emulates the existence of standard
+# configuration files within an actually
+# installed Arch Linux system.
+RUN mkdir -p .config .local/bin .local/share
+
+# Sets the default $HOME and $USER
+# environment variables.
+ENV HOME=/home/user
+ENV USER=user
+
+CMD [ "/bin/bash" ]

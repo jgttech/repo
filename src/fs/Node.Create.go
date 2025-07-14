@@ -1,8 +1,9 @@
 package fs
 
 import (
-	"github.com/jgttech/repo/src/assert"
 	"os"
+
+	"github.com/jgttech/repo/src/assert"
 )
 
 func (n *Node) Create() (success bool) {
@@ -13,7 +14,7 @@ func (n *Node) Create() (success bool) {
 		file.Close()
 	case TYPE_FOLDER:
 		success = true
-		os.MkdirAll(n.Path, 0700)
+		os.MkdirAll(n.Path, 0755)
 	default:
 		success = false
 	}

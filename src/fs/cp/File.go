@@ -14,8 +14,6 @@ func File(opts ...option) (err error) {
 		opt(data)
 	}
 
-	fmt.Printf("%#v\n", data)
-
 	from, fromErr := os.Stat(data.from)
 	to, toErr := os.Stat(data.to)
 
