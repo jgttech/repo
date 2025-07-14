@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/jgttech/repo/cmds/export"
 	"github.com/jgttech/repo/cmds/install"
 	"github.com/jgttech/repo/cmds/uninstall"
 	"github.com/urfave/cli/v3"
@@ -23,6 +24,7 @@ func main() {
 		Commands: []*cli.Command{
 			install.Command(),
 			uninstall.Command(),
+			export.Command(),
 		},
 	}
 
