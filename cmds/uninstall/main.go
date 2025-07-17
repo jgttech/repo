@@ -1,4 +1,4 @@
-package uninstall
+package cmdUninstall
 
 import (
 	"context"

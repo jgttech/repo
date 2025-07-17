@@ -12,7 +12,9 @@ func Protected(cmd *cli.Command) *cli.Command {
 
 	if !enabled {
 		cmd.Action = func(_ context.Context, _ *cli.Command) error {
-			fmt.Println("Must install CLI. Please run 'repo install'.")
+			fmt.Println("[ERROR]")
+			fmt.Println("Must install or import CLI config. Please,")
+			fmt.Println("run 'repo install' or 'repo import'.")
 			return nil
 		}
 	}

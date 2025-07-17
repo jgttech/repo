@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/jgttech/repo/cmds/export"
+	"github.com/jgttech/repo/cmds/import"
 	"github.com/jgttech/repo/cmds/install"
 	"github.com/jgttech/repo/cmds/uninstall"
 	"github.com/jgttech/repo/src/cli"
@@ -23,9 +24,10 @@ func main() {
 			"across multiple repo's and accounts.",
 		}, "\n"),
 		Commands: []*v3.Command{
-			install.Command(),
-			cli.Protected(uninstall.Command()),
-			cli.Protected(export.Command()),
+			cmdInstall.Command(),
+			cmdImport.Command(),
+			cli.Protected(cmdUninstall.Command()),
+			cli.Protected(cmdExport.Command()),
 		},
 	}
 
