@@ -8,9 +8,15 @@ import (
 	"os"
 
 	"github.com/jgttech/repo/src/assert"
+	// "github.com/jgttech/repo/src/pathlib"
 )
 
 func (self *Archive) Write() (err error) {
+	self.Files = []string{
+		"/home/user/docs/file1.txt",
+		"/home/admin/user/file2.txt",
+	}
+
 	_, err = os.Stat(self.Path)
 
 	if err == nil {
@@ -33,6 +39,8 @@ func (self *Archive) Write() (err error) {
 	tarWriter := tar.NewWriter(gzWriter)
 	defer tarWriter.Close()
 
+	// base := pathlib.SharedDir(self.Files)
+
 	for _, filename := range self.Files {
 		target := assert.Must(os.Open(filename))
 		info := assert.Must(target.Stat())
@@ -45,6 +53,7 @@ func (self *Archive) Write() (err error) {
 		//
 		// https://golang.org/src/archive/tar/common.go?#L626
 		header.Name = filename
+		fmt.Println(header.Name)
 
 		assert.Throws(tarWriter.WriteHeader(header))
 		assert.Must(io.Copy(tarWriter, target))

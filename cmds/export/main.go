@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+
 	"path"
 	"path/filepath"
 	"strings"
+
 	"time"
 
 	"github.com/jgttech/repo/src/archive"
@@ -41,7 +43,11 @@ func Command() *cli.Command {
 				}
 
 				if path != dir {
-					export.Add(path)
+					info, _ := os.Stat(path)
+
+					if !info.IsDir() {
+						export.Add(path)
+					}
 				}
 
 				return nil
