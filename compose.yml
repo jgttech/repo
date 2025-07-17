@@ -7,8 +7,4 @@ services:
     stdin_open: true
     tty: true
     working_dir: /home/user
-    volumes:
-      - .:/home/user/.repocli
-    tmpfs:
-      - /home/user/.repocli/.build:uid=1000,gid=1000,exec
     command: bash -c "sleep infinity"
