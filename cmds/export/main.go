@@ -10,14 +10,15 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jgttech/repo/src/archive"
+	"github.com/jgttech/repo/src/cli"
 	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/state"
-	"github.com/jgttech/repo/src/tar"
-	"github.com/urfave/cli/v3"
+	v3 "github.com/urfave/cli/v3"
 )
 
-func Command() *cli.Command {
-	return &cli.Command{
+func Command() *v3.Command {
+	return cli.ProtectedCommand(cli.IsInstalled(), &v3.Command{
 		Name: "export",
 		Description: strings.Join([]string{
 			"Generates an archive of your CLI",
@@ -27,13 +28,13 @@ func Command() *cli.Command {
 			"the name 'repocli.<unix_timestamp>.tar.gz'.",
 		}, "\n"),
 		EnableShellCompletion: true,
-		Action: func(ctx context.Context, c *cli.Command) (err error) {
+		Action: func(ctx context.Context, c *v3.Command) (err error) {
 			home := os.Getenv("HOME")
 			s := state.New()
 			dir := path.Join(s.Home, env.REPO_DIR)
 			archiveName := fmt.Sprintf("repocli.%d.tar.gz", time.Now().Unix())
 			archivePath := path.Join(home, archiveName)
-			archive := tar.New(archivePath)
+			export := archive.New(archivePath)
 
 			filepath.Walk(dir, func(path string, info fs.FileInfo, err error) error {
 				if err != nil {
@@ -41,15 +42,14 @@ func Command() *cli.Command {
 				}
 
 				if path != dir {
-					archive.Add(path)
+					export.Add(path)
 				}
 
 				return nil
 			})
 
-			archive.Create()
-
+			export.Write()
 			return
 		},
-	}
+	})
 }

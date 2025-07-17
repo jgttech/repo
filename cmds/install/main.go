@@ -13,10 +13,10 @@ import (
 	"github.com/jgttech/repo/src/fs"
 	"github.com/jgttech/repo/src/fs/cp"
 	"github.com/jgttech/repo/src/state"
-	"github.com/urfave/cli/v3"
+	v3 "github.com/urfave/cli/v3"
 )
 
-func Command() *cli.Command {
+func Command() *v3.Command {
 	cwd := assert.Must(os.Getwd())
 	timestamp := time.Now().Unix()
 	home := os.Getenv("HOME")
@@ -25,16 +25,16 @@ func Command() *cli.Command {
 	gitBackupPath := path.Join(home, backupName)
 	gitConfig := fs.NewNode(path.Join(env.BASE_DIR, ".gitconfig"), fs.File)
 
-	return &cli.Command{
+	return &v3.Command{
 		Name:                  "install",
 		EnableShellCompletion: true,
-		Flags: []cli.Flag{
-			&cli.StringFlag{
+		Flags: []v3.Flag{
+			&v3.StringFlag{
 				Name:        "cwd",
 				Destination: &cwd,
 			},
 		},
-		Action: func(ctx context.Context, c *cli.Command) (err error) {
+		Action: func(ctx context.Context, c *v3.Command) (err error) {
 			_, err = os.Stat(env.BASE_DIR)
 
 			if err == nil {
