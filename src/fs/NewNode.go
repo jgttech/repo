@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+type nodeOption func(*Node)
+
 func NewNode(target string, opts ...nodeOption) (n *Node) {
 	n = &Node{}
 

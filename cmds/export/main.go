@@ -3,11 +3,9 @@ package export
 import (
 	"context"
 	"fmt"
-	"io/fs"
 	"os"
 
 	"path"
-	"path/filepath"
 	"strings"
 
 	"time"
@@ -30,30 +28,18 @@ func Command() *cli.Command {
 		}, "\n"),
 		EnableShellCompletion: true,
 		Action: func(ctx context.Context, c *cli.Command) (err error) {
-			home := os.Getenv("HOME")
 			s := state.New()
-			dir := path.Join(s.Home, env.REPO_DIR)
-			archiveName := fmt.Sprintf("repocli.%d.tar.gz", time.Now().Unix())
-			archivePath := path.Join(home, archiveName)
-			export := archive.New(archivePath)
+			home := os.Getenv("HOME")
+			name := fmt.Sprintf("repocli.%d.tar.gz", time.Now().Unix())
 
-			filepath.Walk(dir, func(path string, info fs.FileInfo, err error) error {
-				if err != nil {
-					return err
-				}
+			in := path.Join(s.Home, env.REPO_DIR)
+			out := path.Join(home, name)
 
-				if path != dir {
-					info, _ := os.Stat(path)
+			err = archive.Create(
+				archive.From(in),
+				archive.To(out),
+			)
 
-					if !info.IsDir() {
-						export.Add(path)
-					}
-				}
-
-				return nil
-			})
-
-			export.Write()
 			return
 		},
 	}

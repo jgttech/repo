@@ -1,6 +1,6 @@
 package archive
 
 type Archive struct {
-	Path  string
-	Files []string
+	From string
+	To   string
 }

@@ -7,7 +7,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func NewCli(file string) (*Cli, error) {
+func New(file string) (*Cli, error) {
 	cli := &Cli{}
 	_, err := os.Stat(file)
 
