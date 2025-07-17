@@ -7,7 +7,9 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-func ProtectedCommand(enabled bool, cmd *cli.Command) *cli.Command {
+func Protected(cmd *cli.Command) *cli.Command {
+	enabled := IsInstalled()
+
 	if !enabled {
 		cmd.Action = func(_ context.Context, _ *cli.Command) error {
 			fmt.Println("Must install CLI. Please run 'repo install'.")

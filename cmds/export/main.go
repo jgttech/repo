@@ -11,14 +11,13 @@ import (
 	"time"
 
 	"github.com/jgttech/repo/src/archive"
-	"github.com/jgttech/repo/src/cli"
 	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/state"
-	v3 "github.com/urfave/cli/v3"
+	"github.com/urfave/cli/v3"
 )
 
-func Command() *v3.Command {
-	return cli.ProtectedCommand(cli.IsInstalled(), &v3.Command{
+func Command() *cli.Command {
+	return &cli.Command{
 		Name: "export",
 		Description: strings.Join([]string{
 			"Generates an archive of your CLI",
@@ -28,7 +27,7 @@ func Command() *v3.Command {
 			"the name 'repocli.<unix_timestamp>.tar.gz'.",
 		}, "\n"),
 		EnableShellCompletion: true,
-		Action: func(ctx context.Context, c *v3.Command) (err error) {
+		Action: func(ctx context.Context, c *cli.Command) (err error) {
 			home := os.Getenv("HOME")
 			s := state.New()
 			dir := path.Join(s.Home, env.REPO_DIR)
@@ -51,5 +50,5 @@ func Command() *v3.Command {
 			export.Write()
 			return
 		},
-	})
+	}
 }

@@ -9,11 +9,12 @@ import (
 	"github.com/jgttech/repo/cmds/export"
 	"github.com/jgttech/repo/cmds/install"
 	"github.com/jgttech/repo/cmds/uninstall"
-	"github.com/urfave/cli/v3"
+	"github.com/jgttech/repo/src/cli"
+	v3 "github.com/urfave/cli/v3"
 )
 
 func main() {
-	app := cli.Command{
+	app := v3.Command{
 		Name:    "repo",
 		Usage:   "Git Account Multiplexer",
 		Authors: []any{"jgt.tech@protonmail.com"},
@@ -21,10 +22,10 @@ func main() {
 			"CLI manager for Git + SSH configurations",
 			"across multiple repo's and accounts.",
 		}, "\n"),
-		Commands: []*cli.Command{
+		Commands: []*v3.Command{
 			install.Command(),
-			uninstall.Command(),
-			export.Command(),
+			cli.Protected(uninstall.Command()),
+			cli.Protected(export.Command()),
 		},
 	}
 

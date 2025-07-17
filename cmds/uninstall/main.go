@@ -9,16 +9,16 @@ import (
 	"github.com/jgttech/repo/src/exec"
 	"github.com/jgttech/repo/src/fs/cp"
 	"github.com/jgttech/repo/src/state"
-	v3 "github.com/urfave/cli/v3"
+	"github.com/urfave/cli/v3"
 )
 
-func Command() *v3.Command {
+func Command() *cli.Command {
 	home := os.Getenv("HOME")
 
-	return &v3.Command{
+	return &cli.Command{
 		Name:                  "uninstall",
 		EnableShellCompletion: true,
-		Action: func(ctx context.Context, c *v3.Command) (err error) {
+		Action: func(ctx context.Context, c *cli.Command) (err error) {
 			s := state.New()
 
 			// Revert all backups that exist.
