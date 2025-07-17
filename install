@@ -54,10 +54,12 @@ fi
 wd=$(pwd)
 cd $root
 
+echo "pwd: ${pwd}"
+
 # Build the CLI
-go build -o $build main.go
+# go build -o $build main.go
 
 # Install the CLI
-$build install
+# $build install
 
-cd $wd
+# cd $wd
