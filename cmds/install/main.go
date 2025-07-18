@@ -51,18 +51,18 @@ func Command() *v3.Command {
 			}
 
 			if len(missing) > 0 {
-				fmt.Println("\nMissing required dependencies:")
+				fmt.Println("\n| Missing required dependencies:")
 
 				for _, pkg := range missing {
-					fmt.Printf("- %s\n", pkg)
+					fmt.Printf("| - %s\n", pkg)
 				}
 
 				fmt.Println()
 				err = fmt.Errorf(
 					"\n\n" +
-						"Please install required dependencies and\n" +
-						"run 'bash .repocli/install' to complete\n" +
-						"the installation\n",
+						"| Please install required dependencies and\n" +
+						"| run 'bash .repocli/install' to complete\n" +
+						"| the installation\n",
 				)
 
 				return
