@@ -35,8 +35,6 @@ func Command() *v3.Command {
 			},
 		},
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
-			fmt.Println("BASE_DEV", env.BASE_DEV)
-			fmt.Println("BASE_PRD", env.BASE_PRD)
 			fmt.Println("BASE_DIR", env.BASE_DIR)
 			fmt.Println("BASE_CONF", env.BASE_CONF)
 			fmt.Println("BASE_CLI", env.BASE_CLI)
