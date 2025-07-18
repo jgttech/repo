@@ -8,6 +8,17 @@ import (
 )
 
 var (
+	// Determine the runtime mode.
+	MODE = (func() string {
+		mode := os.Getenv("REPO_MODE")
+
+		if mode == "" {
+			mode = CONST_PRD
+		}
+
+		return mode
+	})()
+
 	// CLI & User specific locations.
 	BASE = assert.Must(os.Getwd())
 	HOME = os.Getenv("HOME")

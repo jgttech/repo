@@ -39,6 +39,11 @@ func Command() *v3.Command {
 			},
 		},
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
+			// Make sure the config exists.
+			if _, err = os.Stat(env.LOCAL_CLI); err != nil {
+				return
+			}
+
 			// Loads the CLI that comes from the the repo, itself.
 			conf.Load(cli.File(env.LOCAL_CLI))
 
@@ -59,38 +64,48 @@ func Command() *v3.Command {
 			gitBackupPath := path.Join(HOME, gitBackupName)
 			gitConfig := fs.NewNode(path.Join(BUILD_DIR, ".gitconfig"), fs.File)
 
-			err = os.MkdirAll(env.BUILD_CONF, 0755)
-			err = cp.File(cp.From(gitConfigPath), cp.To(gitBackupPath))
-			err = os.Remove(gitConfigPath)
+			if err = os.MkdirAll(env.BUILD_CONF, 0755); err != nil {
+				return
+			}
+
+			if err = cp.File(cp.From(gitConfigPath), cp.To(gitBackupPath)); err != nil {
+				return
+			}
+
+			if err = os.Remove(gitConfigPath); err != nil {
+				return
+			}
 
 			// Create the .gitconfig the CLI manages.
-			gitConfig.Create()
+			if err = gitConfig.Create(); err != nil {
+				return
+			}
 
 			// Create the new state.
 			s := state.New()
 
 			// Add backed up .gitconfig to install config.
 			s.AddBackup(gitConfigPath, gitBackupPath)
-			s.Save()
 
-			// Make sure the config exists.
-			_, err = os.Stat(env.LOCAL_CLI)
-
-			if os.IsNotExist(err) {
+			if err = s.Save(); err != nil {
 				return
 			}
 
 			// Copy the CLI config into the build.
-			err = cp.File(cp.From(env.LOCAL_CLI), cp.To(env.BUILD_CLI))
+			if err = cp.File(cp.From(env.LOCAL_CLI), cp.To(env.BUILD_CLI)); err != nil {
+				return
+			}
 
-			if err == nil {
-				conf.Load(cli.File(env.BUILD_CLI))
-				conf.Exports = os.ExpandEnv(conf.Exports)
-				conf.Save()
+			// Update the builds CLI config with the expanded exports.
+			conf.Load(cli.File(env.BUILD_CLI))
+			conf.Exports = os.ExpandEnv(conf.Exports)
+
+			if err = conf.Save(); err != nil {
+				return
 			}
 
 			// Generate all the symlinks from the build.
-			arg := fmt.Sprintf("stow -t %s %s", HOME, env.BUILD_DIR)
+			arg := fmt.Sprintf("stow -t %s %s", HOME, env.CONST_DIR)
 			cmd := exec.Cmd(arg, exec.Dir(cwd), exec.Stdio)
 			err = cmd.Run()
 

@@ -9,10 +9,13 @@ import (
 func SystemInstalled() (installed bool) {
 	missing := []string{}
 	targets := []string{
-		env.OS_BIN,
 		env.OS_CONF,
 		env.OS_CLI,
 		env.OS_STATE,
+	}
+
+	if env.IsProd() {
+		targets = append(targets, env.OS_BIN)
 	}
 
 	for _, target := range targets {

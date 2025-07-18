@@ -3,13 +3,19 @@ package state
 import (
 	"os"
 
-	"github.com/jgttech/repo/src/assert"
 	"gopkg.in/yaml.v3"
 )
 
-func (self *State) Save() {
+func (self *State) Save() (err error) {
 	self.updateTimestamp()
 	filepath := self.File.Path
-	bytes := assert.Must(yaml.Marshal(self))
-	assert.Throws(os.WriteFile(filepath, bytes, 0700))
+
+	bytes, err := yaml.Marshal(self)
+
+	if err != nil {
+		return
+	}
+
+	err = os.WriteFile(filepath, bytes, 0700)
+	return
 }

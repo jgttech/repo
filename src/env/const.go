@@ -1,8 +1,8 @@
 package env
 
 const (
-	CONST_PRD   = 0
-	CONST_DEV   = 1
+	CONST_PRD   = "0"
+	CONST_DEV   = "1"
 	CONST_BIN   = "repo"
 	CONST_DIR   = ".build"
 	CONST_LOCAL = ".local/bin"

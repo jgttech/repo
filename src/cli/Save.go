@@ -1,14 +1,19 @@
 package cli
 
 import (
-	"os"
-
-	"github.com/jgttech/repo/src/assert"
 	"gopkg.in/yaml.v3"
+	"os"
 )
 
-func (self *Conf) Save() {
+func (self *Conf) Save() (err error) {
 	filepath := self.node.Path
-	bytes := assert.Must(yaml.Marshal(self))
-	assert.Throws(os.WriteFile(filepath, bytes, 0700))
+
+	bytes, err := yaml.Marshal(self)
+
+	if err != nil {
+		return
+	}
+
+	err = os.WriteFile(filepath, bytes, 0700)
+	return
 }
