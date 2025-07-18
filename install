@@ -55,8 +55,6 @@ fi
 wd=$(pwd)
 cd $root
 
-echo "pwd: $(pwd)"
-
 # Build the CLI
 go build -o $build main.go
 

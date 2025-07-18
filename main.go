@@ -11,10 +11,13 @@ import (
 	"github.com/jgttech/repo/cmds/install"
 	"github.com/jgttech/repo/cmds/uninstall"
 	"github.com/jgttech/repo/src/cli"
+	"github.com/jgttech/repo/src/runtime"
 	v3 "github.com/urfave/cli/v3"
 )
 
 func main() {
+	runtime.EnsureDependencies()
+
 	app := v3.Command{
 		Name:    "repo",
 		Usage:   "Git Account Multiplexer",
