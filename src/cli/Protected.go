@@ -12,14 +12,14 @@ func Protected(cmd *cli.Command) *cli.Command {
 
 	if !enabled {
 		cmd.Action = func(_ context.Context, _ *cli.Command) error {
-			fmt.Println("|")
+			fmt.Println("\n|")
 			fmt.Println("| ERROR")
 			fmt.Println("| Must install or import CLI config.")
 			fmt.Println("| Please, run one of the following:")
 			fmt.Println("|")
 			fmt.Println("| 1. $ repo install")
 			fmt.Println("| 2. $ repo import")
-			fmt.Println("|")
+			fmt.Printf("|\n\n")
 			return nil
 		}
 	}
