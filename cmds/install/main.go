@@ -40,8 +40,8 @@ func Command() *v3.Command {
 		},
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
 			base := []string{env.HOME, env.REPO_CLI}
-			dir := strings.Join(base, string(filepath.Separator))
-			conf := assert.Must(cli.Load(dir))
+			confPath := strings.Join(base, string(filepath.Separator))
+			conf := assert.Must(cli.Load(confPath))
 			missing := []string{}
 
 			for _, dep := range conf.Dependencies {
@@ -103,6 +103,12 @@ func Command() *v3.Command {
 
 			// Copy the CLI config into the build.
 			err = cp.File(cp.From(cliConfig), cp.To(env.BASE_CLI))
+
+			if err == nil {
+				base := assert.Must(cli.Load(env.BASE_CLI))
+				base.Export = os.ExpandEnv(base.Export)
+				base.Save()
+			}
 
 			// Generate all the symlinks from the build.
 			arg := fmt.Sprintf("stow -t %s %s", home, env.REPO_DIR)

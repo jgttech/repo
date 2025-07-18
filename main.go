@@ -9,6 +9,7 @@ import (
 	_export "github.com/jgttech/repo/cmds/export"
 	_import "github.com/jgttech/repo/cmds/import"
 	_install "github.com/jgttech/repo/cmds/install"
+	_set "github.com/jgttech/repo/cmds/set"
 	_uninstall "github.com/jgttech/repo/cmds/uninstall"
 	"github.com/jgttech/repo/src/cli"
 	v3 "github.com/urfave/cli/v3"
@@ -28,6 +29,7 @@ func main() {
 			_import.Command(),
 			cli.Protected(_uninstall.Command()),
 			cli.Protected(_export.Command()),
+			cli.Protected(_set.Command()),
 		},
 	}
 

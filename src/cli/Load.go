@@ -17,7 +17,9 @@ func Load(file string) (*Cli, error) {
 
 	bytes, err := os.ReadFile(file)
 	err = yaml.Unmarshal(bytes, cli)
+
 	cli.node = fs.NewNode(file)
+	cli.Export = os.ExpandEnv(cli.Export)
 
 	return cli, err
 }
