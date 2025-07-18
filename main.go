@@ -25,19 +25,9 @@ func main() {
 		}, "\n"),
 		Commands: []*v3.Command{
 			_install.Command(),
-			cli.Dependencies(
-				_import.Command(),
-			),
-			cli.Dependencies(
-				cli.Protected(
-					_uninstall.Command(),
-				),
-			),
-			cli.Dependencies(
-				cli.Protected(
-					_export.Command(),
-				),
-			),
+			_import.Command(),
+			cli.Protected(_uninstall.Command()),
+			cli.Protected(_export.Command()),
 		},
 	}
 
