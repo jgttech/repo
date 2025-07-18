@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	_export "github.com/jgttech/repo/cmds/export"
+	_get "github.com/jgttech/repo/cmds/get"
 	_import "github.com/jgttech/repo/cmds/import"
 	_install "github.com/jgttech/repo/cmds/install"
 	_set "github.com/jgttech/repo/cmds/set"
@@ -30,6 +31,7 @@ func main() {
 			cli.Protected(_uninstall.Command()),
 			cli.Protected(_export.Command()),
 			cli.Protected(_set.Command()),
+			cli.Protected(_get.Command()),
 		},
 	}
 

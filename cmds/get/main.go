@@ -1,8 +1,8 @@
-package _set
+package _get
 
 import (
 	"context"
-	"os"
+	"fmt"
 	"strings"
 
 	"github.com/jgttech/repo/src/assert"
@@ -12,27 +12,25 @@ import (
 
 func Command() *v3.Command {
 	return &v3.Command{
-		Name: "set",
+		Name: "get",
 		Description: strings.Join([]string{
-			"Allows you to set a config setting with",
-			"a simple update syntax that affects how",
-			"the CLI works.",
+			"Allows you to get a config setting with",
+			"a key that matches the path to a known",
+			"setting.",
 		}, "\n"),
 		EnableShellCompletion: true,
-		Action: func(ctx context.Context, c *v3.Command) error {
+		Action: func(ctx context.Context, c *v3.Command) (err error) {
 			conf := assert.Must(cli.New())
 			key := c.Args().Get(0)
-			value := c.Args().Get(1)
 
-			if key != "" && value != "" {
+			if key != "" {
 				switch key {
 				case "exports":
-					conf.Exports = os.ExpandEnv(value)
-					conf.Save()
+					fmt.Println(conf.Exports)
 				}
 			}
 
-			return nil
+			return
 		},
 	}
 }
