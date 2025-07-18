@@ -51,19 +51,21 @@ func Command() *v3.Command {
 			}
 
 			if len(missing) > 0 {
-				fmt.Println("\n| Missing required dependencies:")
+				fmt.Println("\n|\n| Missing required dependencies:")
 
 				for _, pkg := range missing {
 					fmt.Printf("| - %s\n", pkg)
 				}
 
-				fmt.Println()
+				fmt.Println("|")
 
 				err = fmt.Errorf("\n\n"+
+					"|\n"+
 					"| ERROR\n"+
 					"| Please install required dependencies and\n"+
 					"| run 'bash ~/%s/install' to complete\n"+
-					"| the installation\n",
+					"| the installation\n"+
+					"|\n",
 					filepath.Base(env.HOME),
 				)
 
