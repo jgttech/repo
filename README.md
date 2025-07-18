@@ -1,31 +1,25 @@
-# Repo CLI
+# Repo CLI, A "Git Account Multiplexer"
 
-This is a CLI uility that adds a thin opinionated layer around the `git` and `gh` interfaces. The goal of this is to create a common interface that allows you to manage multiple users across different repositories with different tools, through a single CLI interface.
+This CLI utility is what I like to call a "Git Account Mulitplexer". The idea is that anywhere a `git` configuration is used this tool can sit on top of that and manage the account contexts between an endless number of `git` configurations and their, respective, SSH keys for each account from a centralized and state managed solution that removes the need to remember how to maintain multiple sets of configurations and SSH keys. The was inspired off of the GitHub `gh` CLI.
 
-# Commands
+# WIP Commands
 
-These commands are what you can do with the `repo` CLI.
+These commands are still a work in progress but there is an embedded Obsidian docs within this repo, please feel free to reivew it, if need be. There I can go over the technical considerations of the tool and its use cases in greater depth. Here is just an overview of its use cases.
 
 ---
+
+> This is run for you, automatically.
 
 ```bash
 repo install
 ```
 
-> Performs a system installation. This does all the initial setup work to use and maange the `repo` CLI. This gets automatically run by the installer if you installed `repo` using the copy-and-paste command from these docs.
-
 ---
 
+> Uninstalls everything from your system, except the CLI itself.
+
 ```bash
-repo add <optional_path_to_git_repo> --alias <name>
+repo uninstall
 ```
 
-> This registers a repo with the CLI. Once registered, you can optionally assign it an `--alias` when adding it if you want to keep the repo under another name that is different than the name of the directory.
-
-**_Args:_**
-
-This command can optionally accept a path. The path passed in is checked to see if it is a `git` repo. If it is, it will be registered with the `repo` CLI.
-
-**_Flags:_**
-
-- `--alias -a`: Allows assigning another name to this repo as a reference within the `repo` CLI. The name (or alias) of registered repos has an effect on using how you can refer to that given repo within the `repo` CLI.
+---
