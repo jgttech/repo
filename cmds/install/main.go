@@ -51,7 +51,7 @@ func Command() *v3.Command {
 			}
 
 			if len(missing) > 0 {
-				fmt.Println("\n|\n| Missing required dependencies:")
+				fmt.Printf("\n|\n| Missing (%d) required dependencies:\n", len(missing))
 
 				for _, pkg := range missing {
 					fmt.Printf("| - %s\n", pkg)
