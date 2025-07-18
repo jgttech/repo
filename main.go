@@ -11,8 +11,9 @@ import (
 	// _get "github.com/jgttech/repo/cmds/get"
 	// _import "github.com/jgttech/repo/cmds/import"
 	_install "github.com/jgttech/repo/cmds/install"
+	"github.com/jgttech/repo/src/cmd"
 	// _set "github.com/jgttech/repo/cmds/set"
-	// _uninstall "github.com/jgttech/repo/cmds/uninstall"
+	_uninstall "github.com/jgttech/repo/cmds/uninstall"
 	// "github.com/jgttech/repo/src/cli"
 	v3 "github.com/urfave/cli/v3"
 )
@@ -30,7 +31,7 @@ func main() {
 			_install.Command(),
 			// _import.Command(),
 			// _env.Command(),
-			// cli.Protected(_uninstall.Command()),
+			cmd.Protected(_uninstall.Command()),
 			// cli.Protected(_export.Command()),
 			// cli.Protected(_set.Command()),
 			// cli.Protected(_get.Command()),

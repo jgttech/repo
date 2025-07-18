@@ -3,6 +3,7 @@ package cli
 import (
 	"os"
 
+	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/fs"
 	"gopkg.in/yaml.v3"
 )
@@ -10,6 +11,10 @@ import (
 func (self *Conf) Load(options ...cliOption) (err error) {
 	for _, fn := range options {
 		fn(self)
+	}
+
+	if self.node == nil {
+		self.node = fs.NewNode(env.BUILD_CLI)
 	}
 
 	file := self.node.Path
