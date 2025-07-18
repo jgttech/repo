@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/jgttech/repo/src/assert"
+	"github.com/jgttech/repo/src/cli"
 	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/exec"
 	"github.com/jgttech/repo/src/fs"
@@ -35,6 +38,14 @@ func Command() *v3.Command {
 			},
 		},
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
+			base := []string{env.HOME, env.REPO_CLI}
+			dir := strings.Join(base, string(filepath.Separator))
+			conf := assert.Must(cli.Load(dir))
+
+			for _, dep := range conf.Dependencies {
+				fmt.Println("DEP:", dep)
+			}
+
 			_, err = os.Stat(env.BASE_CONF)
 
 			if err == nil {
