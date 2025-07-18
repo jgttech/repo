@@ -31,7 +31,7 @@ func Command() *v3.Command {
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
 			s := state.New()
 			conf := assert.Must(cli.New())
-			base := conf.Export
+			base := conf.Exports
 			name := fmt.Sprintf("repocli.%d.tar.gz", time.Now().Unix())
 
 			in := path.Join(s.Home, env.REPO_DIR)

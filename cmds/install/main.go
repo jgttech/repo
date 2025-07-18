@@ -106,7 +106,7 @@ func Command() *v3.Command {
 
 			if err == nil {
 				base := assert.Must(cli.Load(env.BASE_CLI))
-				base.Export = os.ExpandEnv(base.Export)
+				base.Exports = os.ExpandEnv(base.Exports)
 				base.Save()
 			}
 

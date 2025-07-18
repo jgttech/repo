@@ -27,7 +27,7 @@ func Command() *v3.Command {
 			if key != "" && value != "" {
 				switch key {
 				case "export":
-					conf.Export = os.ExpandEnv(value)
+					conf.Exports = os.ExpandEnv(value)
 					conf.Save()
 				}
 			}

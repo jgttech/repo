@@ -19,7 +19,7 @@ func Load(file string) (*Cli, error) {
 	err = yaml.Unmarshal(bytes, cli)
 
 	cli.node = fs.NewNode(file)
-	cli.Export = os.ExpandEnv(cli.Export)
+	cli.Exports = os.ExpandEnv(cli.Exports)
 
 	return cli, err
 }
