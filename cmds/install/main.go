@@ -15,6 +15,7 @@ import (
 	"github.com/jgttech/repo/src/exec"
 	"github.com/jgttech/repo/src/fs"
 	"github.com/jgttech/repo/src/fs/cp"
+	_os "github.com/jgttech/repo/src/os"
 	"github.com/jgttech/repo/src/state"
 	v3 "github.com/urfave/cli/v3"
 )
@@ -41,9 +42,24 @@ func Command() *v3.Command {
 			base := []string{env.HOME, env.REPO_CLI}
 			dir := strings.Join(base, string(filepath.Separator))
 			conf := assert.Must(cli.Load(dir))
+			missing := []string{}
 
 			for _, dep := range conf.Dependencies {
-				fmt.Println("DEP:", dep)
+				if !_os.PackageInstalled(dep) {
+					missing = append(missing, dep)
+				}
+			}
+
+			if len(missing) > 0 {
+				fmt.Println("Missing required dependencies:")
+
+				for _, pkg := range missing {
+					fmt.Printf("- %s\n", pkg)
+				}
+
+				err = fmt.Errorf("Please install required dependencies and run 'bash .repocli/install' to complete the installation")
+
+				return
 			}
 
 			_, err = os.Stat(env.BASE_CONF)
