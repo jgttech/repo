@@ -57,7 +57,7 @@ cd $root
 
 go build -o $bin main.go
 
-if [[ -z "$bin" ]] && $bin install || {
+if [[ -f "$bin" ]] && $bin install || {
   echo "Failed to install 'repo' CLI."
   exit 1
 }
