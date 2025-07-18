@@ -3,8 +3,8 @@ set -euo pipefail
 
 repo="https://github.com/jgttech/repo"
 root="$HOME/.repocli"
-out=".build/.local/bin/repo"
-build="$root/$out"
+build=".build"
+bin="$build/.local/bin/repo"
 
 # Where the brew and go CLI are located.
 brew="/home/linuxbrew/.linuxbrew/bin/brew"
@@ -55,10 +55,11 @@ fi
 wd=$(pwd)
 cd $root
 
-# Build the CLI
-go build -o $build main.go
+go build -o $bin main.go
 
-# Install the CLI
-$out install
+if [[ -z "$bin" ]] && $bin install || {
+  echo "Failed to install 'repo' CLI."
+  exit 1
+}
 
 cd $wd

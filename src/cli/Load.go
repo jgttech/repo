@@ -7,19 +7,17 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func Load(file string) (*Cli, error) {
-	cli := &Cli{}
-	_, err := os.Stat(file)
-
-	if err != nil {
-		return nil, err
+func (self *Conf) Load(options ...cliOption) (err error) {
+	for _, fn := range options {
+		fn(self)
 	}
 
+	file := self.node.Path
 	bytes, err := os.ReadFile(file)
-	err = yaml.Unmarshal(bytes, cli)
+	err = yaml.Unmarshal(bytes, self)
 
-	cli.node = fs.NewNode(file)
-	cli.Exports = os.ExpandEnv(cli.Exports)
+	self.node = fs.NewNode(file)
+	self.Exports = os.ExpandEnv(self.Exports)
 
-	return cli, err
+	return
 }

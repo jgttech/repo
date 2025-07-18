@@ -1,10 +1,12 @@
 package env
 
 const (
-	REPO_PRD   = 0
-	REPO_DEV   = 1
-	REPO_DIR   = ".build"
-	REPO_CONF  = ".config/repocli"
-	REPO_CLI   = "cli.yml"
-	REPO_STATE = "state.yml"
+	CONST_PRD   = 0
+	CONST_DEV   = 1
+	CONST_BIN   = "repo"
+	CONST_DIR   = ".build"
+	CONST_LOCAL = ".local/bin"
+	CONST_CONF  = ".config/repocli"
+	CONST_CLI   = "cli.yml"
+	CONST_STATE = "state.yml"
 )

@@ -1,17 +1,18 @@
-package cli
+package cmd
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/urfave/cli/v3"
+	"github.com/jgttech/repo/src/cli"
+	v3 "github.com/urfave/cli/v3"
 )
 
-func Protected(cmd *cli.Command) *cli.Command {
-	enabled := IsInstalled()
+func Protected(cmd *v3.Command) *v3.Command {
+	enabled := cli.IsInstalled()
 
 	if !enabled {
-		cmd.Action = func(_ context.Context, _ *cli.Command) error {
+		cmd.Action = func(_ context.Context, _ *v3.Command) error {
 			fmt.Println("\n|")
 			fmt.Println("| ERROR")
 			fmt.Println("| Must install or import CLI config.")
