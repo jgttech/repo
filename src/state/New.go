@@ -11,7 +11,7 @@ import (
 
 func New() (state *State) {
 	cwd := assert.Must(os.Getwd())
-	file := env.BASE_STATE
+	file := env.BUILD_STATE
 	state = &State{File: fs.NewNode(file, fs.File)}
 	_, err := os.Stat(file)
 

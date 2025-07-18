@@ -19,19 +19,19 @@ func HasDependencies(conf *cli.Conf) (err error) {
 	}
 
 	if len(missing) > 0 {
-		msg := fmt.Sprintf("\n|\n| Missing (%d) required dependencies:\n", len(missing))
+		msg := fmt.Sprintf("\n\n|\n| Missing (%d) required dependencies:\n", len(missing))
 
 		for _, pkg := range missing {
 			msg += fmt.Sprintf("| - %s\n", pkg)
 		}
 
-		msg += fmt.Sprintf("\n\n"+
+		msg += fmt.Sprintf(
 			"|\n"+
-			"| ERROR\n"+
-			"| Please install required dependencies and\n"+
-			"| run 'bash ~/%s/install' to complete\n"+
-			"| the installation\n"+
-			"|\n",
+				"| ERROR\n"+
+				"| Please install required dependencies and\n"+
+				"| run 'bash ~/%s/install' to complete\n"+
+				"| the installation\n"+
+				"|\n\n",
 			filepath.Base(env.BASE),
 		)
 
