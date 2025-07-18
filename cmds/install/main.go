@@ -57,7 +57,7 @@ func Command() *v3.Command {
 					fmt.Printf("| - %s\n", pkg)
 				}
 
-				fmt.Println("|")
+				fmt.Println("|\n")
 
 				err = fmt.Errorf("\n\n"+
 					"|\n"+
