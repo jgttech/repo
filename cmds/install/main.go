@@ -60,6 +60,7 @@ func Command() *v3.Command {
 				fmt.Println()
 				err = fmt.Errorf(
 					"\n\n" +
+						"| ERROR\n" +
 						"| Please install required dependencies and\n" +
 						"| run 'bash .repocli/install' to complete\n" +
 						"| the installation\n",
