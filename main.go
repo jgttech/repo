@@ -6,18 +6,15 @@ import (
 	"os"
 	"strings"
 
-	"github.com/jgttech/repo/cmds/export"
-	"github.com/jgttech/repo/cmds/import"
-	"github.com/jgttech/repo/cmds/install"
-	"github.com/jgttech/repo/cmds/uninstall"
+	_export "github.com/jgttech/repo/cmds/export"
+	_import "github.com/jgttech/repo/cmds/import"
+	_install "github.com/jgttech/repo/cmds/install"
+	_uninstall "github.com/jgttech/repo/cmds/uninstall"
 	"github.com/jgttech/repo/src/cli"
-	"github.com/jgttech/repo/src/runtime"
 	v3 "github.com/urfave/cli/v3"
 )
 
 func main() {
-	runtime.EnsureDependencies()
-
 	app := v3.Command{
 		Name:    "repo",
 		Usage:   "Git Account Multiplexer",
@@ -27,10 +24,20 @@ func main() {
 			"across multiple repo's and accounts.",
 		}, "\n"),
 		Commands: []*v3.Command{
-			cmdInstall.Command(),
-			cmdImport.Command(),
-			cli.Protected(cmdUninstall.Command()),
-			cli.Protected(cmdExport.Command()),
+			_install.Command(),
+			cli.Dependencies(
+				_import.Command(),
+			),
+			cli.Dependencies(
+				cli.Protected(
+					_uninstall.Command(),
+				),
+			),
+			cli.Dependencies(
+				cli.Protected(
+					_export.Command(),
+				),
+			),
 		},
 	}
 

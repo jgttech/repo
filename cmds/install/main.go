@@ -1,4 +1,4 @@
-package cmdInstall
+package _install
 
 import (
 	"context"
@@ -35,6 +35,9 @@ func Command() *v3.Command {
 			},
 		},
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
+			fmt.Println("BASE_CLI", env.BASE_CLI)
+			return
+
 			_, err = os.Stat(env.BASE_CONF)
 
 			if err == nil {
