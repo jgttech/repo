@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func (self *State) updateHistory(timestamp int64, id string) {
+func (self *Conf) updateHistory(timestamp int64, id string) {
 	if self.History.Max > 0 && id != "" {
 		size := len(self.History.Entries)
 

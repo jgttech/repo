@@ -6,7 +6,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func (self *State) Save() (err error) {
+func (self *Conf) Save() (err error) {
 	self.updateTimestamp()
 	filepath := self.File.Path
 

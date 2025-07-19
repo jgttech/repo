@@ -8,7 +8,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func (self *State) Load(filepath string) (err error) {
+func (self *Conf) read(filepath string) (err error) {
 	_, err = os.Stat(filepath)
 
 	if os.IsNotExist(err) {

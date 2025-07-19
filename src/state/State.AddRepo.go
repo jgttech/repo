@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func (self *State) AddRepo(repo *Repository) {
+func (self *Conf) AddRepo(repo *Repository) {
 	hasher := sha512.New()
 	signature := fmt.Sprintf("%x", hasher.Sum([]byte(repo.Dir)))[0:32]
 

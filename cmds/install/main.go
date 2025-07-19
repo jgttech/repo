@@ -18,16 +18,8 @@ import (
 )
 
 func Command() *v3.Command {
-	HOME := env.HOME
-	BUILD_DIR := env.BUILD_DIR
-
 	// Context in which the "install" operates.
 	cwd := env.BASE
-
-	// We need to load the config from the repo
-	// for doing the installation and check that
-	// all the dependencies are installed.
-	conf := &cli.Conf{}
 
 	return &v3.Command{
 		Name:                  "install",
@@ -39,6 +31,14 @@ func Command() *v3.Command {
 			},
 		},
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
+			HOME := env.HOME
+			BUILD_DIR := env.BUILD_DIR
+
+			// We need to load the config from the repo
+			// for doing the installation and check that
+			// all the dependencies are installed.
+			conf := &cli.Conf{}
+
 			// Make sure the config exists.
 			if _, err = os.Stat(env.LOCAL_CLI); err != nil {
 				return
@@ -82,12 +82,13 @@ func Command() *v3.Command {
 			}
 
 			// Create the new state.
-			s := state.New()
+			sconf := &state.Conf{}
+			sconf.Load()
 
 			// Add backed up .gitconfig to install config.
-			s.AddBackup(gitConfigPath, gitBackupPath)
+			sconf.AddBackup(gitConfigPath, gitBackupPath)
 
-			if err = s.Save(); err != nil {
+			if err = sconf.Save(); err != nil {
 				return
 			}
 

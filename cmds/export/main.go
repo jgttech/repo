@@ -3,18 +3,14 @@ package _export
 import (
 	"context"
 	"fmt"
-
-	"path"
-	"strings"
-
-	"time"
-
 	"github.com/jgttech/repo/src/archive"
-	"github.com/jgttech/repo/src/assert"
 	"github.com/jgttech/repo/src/cli"
 	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/state"
 	v3 "github.com/urfave/cli/v3"
+	"path"
+	"strings"
+	"time"
 )
 
 func Command() *v3.Command {
@@ -29,12 +25,16 @@ func Command() *v3.Command {
 		}, "\n"),
 		EnableShellCompletion: true,
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
-			s := state.New()
-			conf := assert.Must(cli.New())
-			base := conf.Exports
-			name := fmt.Sprintf("repocli.%d.tar.gz", time.Now().Unix())
+			sconf := &state.Conf{}
+			sconf.Load()
 
-			in := path.Join(s.Home, env.REPO_DIR)
+			conf := &cli.Conf{}
+			conf.Load()
+
+			base := conf.Exports
+			name := fmt.Sprintf("repocli.%d.tar.gz", time.Now().UnixNano())
+
+			in := path.Join(sconf.Home, env.CONST_DIR)
 			out := path.Join(base, name)
 
 			err = archive.Create(

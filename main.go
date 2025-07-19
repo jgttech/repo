@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	// _env "github.com/jgttech/repo/cmds/env"
-	// _export "github.com/jgttech/repo/cmds/export"
+	_env "github.com/jgttech/repo/cmds/env"
+	_export "github.com/jgttech/repo/cmds/export"
 	// _get "github.com/jgttech/repo/cmds/get"
 	// _import "github.com/jgttech/repo/cmds/import"
 	_install "github.com/jgttech/repo/cmds/install"
@@ -30,9 +30,9 @@ func main() {
 		Commands: []*v3.Command{
 			_install.Command(),
 			// _import.Command(),
-			// _env.Command(),
+			_env.Command(),
 			cmd.Protected(_uninstall.Command()),
-			// cli.Protected(_export.Command()),
+			cmd.Protected(_export.Command()),
 			// cli.Protected(_set.Command()),
 			// cli.Protected(_get.Command()),
 		},

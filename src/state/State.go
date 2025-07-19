@@ -6,7 +6,7 @@ import (
 
 type Timestamp int64
 
-type State struct {
+type Conf struct {
 	File         *fs.Node               `yaml:"-"`
 	CreatedAt    int64                  `yaml:"created_at"`
 	UpdatedAt    int64                  `yaml:"updated_at"`
