@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jgttech/repo/src/assert"
 	"github.com/jgttech/repo/src/cli"
 	v3 "github.com/urfave/cli/v3"
 )
@@ -20,8 +19,10 @@ func Command() *v3.Command {
 		}, "\n"),
 		EnableShellCompletion: true,
 		Action: func(ctx context.Context, c *v3.Command) (err error) {
-			conf := assert.Must(cli.New())
 			key := c.Args().Get(0)
+
+			conf := &cli.Conf{}
+			err = conf.Load()
 
 			if key != "" {
 				switch key {
