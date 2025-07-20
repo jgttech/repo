@@ -64,6 +64,17 @@ func Command() *v3.Command {
 			gitBackupPath := path.Join(HOME, gitBackupName)
 			gitConfig := fs.NewNode(path.Join(BUILD_DIR, ".gitconfig"), fs.File)
 
+			if _, err = os.Stat(gitConfigPath); os.IsNotExist(err) {
+				file, configErr := os.Create(gitConfigPath)
+
+				if configErr != nil {
+					err = configErr
+					return
+				} else {
+					file.Close()
+				}
+			}
+
 			if err = os.MkdirAll(env.BUILD_CONF, 0755); err != nil {
 				return
 			}
