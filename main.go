@@ -30,7 +30,7 @@ func main() {
 		Commands: []*v3.Command{
 			_install.Command(),
 			_import.Command(),
-			_env.Command(),
+			cmd.Protected(_env.Command()),
 			cmd.Protected(_uninstall.Command()),
 			cmd.Protected(_export.Command()),
 			cmd.Protected(_set.Command()),
