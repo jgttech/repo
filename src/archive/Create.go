@@ -18,8 +18,8 @@ type archiveOption func(*Archive)
 func Create(options ...archiveOption) (err error) {
 	archive := &Archive{}
 
-	for _, option := range options {
-		option(archive)
+	for _, fn := range options {
+		fn(archive)
 	}
 
 	from := fsys.NewNode(archive.From)
