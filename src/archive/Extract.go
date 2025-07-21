@@ -28,8 +28,11 @@ func Extract(options ...archiveOption) (err error) {
 		return
 	}
 
+	cwd := assert.Must(os.Getwd())
 	from := fsys.NewNode(archive.From)
-	// to := fsys.NewNode(archive.To)
+	to := fsys.NewNode(archive.To)
+
+	os.Chdir(to.Path)
 
 	file := assert.Must(os.Open(from.Path))
 	defer file.Close()
@@ -49,6 +52,7 @@ func Extract(options ...archiveOption) (err error) {
 
 		if err != nil {
 			err = errors.New("Failed to extract data.")
+			os.Chdir(cwd)
 			return
 		}
 
@@ -76,5 +80,6 @@ func Extract(options ...archiveOption) (err error) {
 		}
 	}
 
+	os.Chdir(cwd)
 	return
 }
