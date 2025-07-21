@@ -7,10 +7,12 @@ import (
 	"github.com/jgttech/repo/src/assert"
 	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/fs"
+	_os "github.com/jgttech/repo/src/os"
 )
 
 func (self *Conf) Load() {
 	cwd := assert.Must(os.Getwd())
+	cwd = _os.ContractEnv(cwd)
 	file := env.BUILD_STATE
 	self.File = fs.NewNode(file, fs.File)
 	_, err := os.Stat(file)

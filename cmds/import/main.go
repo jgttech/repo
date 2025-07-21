@@ -42,7 +42,7 @@ func Command() *v3.Command {
 				archive.To(base),
 			)
 
-			fmt.Println(base)
+			fmt.Println("base:", base)
 			return
 		},
 	}

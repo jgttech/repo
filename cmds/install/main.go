@@ -83,7 +83,7 @@ func Command() *v3.Command {
 				return
 			}
 
-			if err = os.Remove(gitConfigPath); err != nil {
+			if err = _os.SafeRemove(gitConfigPath); err != nil {
 				return
 			}
 
@@ -110,11 +110,6 @@ func Command() *v3.Command {
 
 			// Update the builds CLI config with the expanded exports.
 			conf.Load(cli.File(env.BUILD_CLI))
-			conf.Exports = os.ExpandEnv(conf.Exports)
-
-			if err = conf.Save(); err != nil {
-				return
-			}
 
 			// Generate all the symlinks from the build.
 			arg := fmt.Sprintf("stow -t %s %s", HOME, env.CONST_DIR)

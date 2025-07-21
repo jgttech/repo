@@ -15,13 +15,17 @@ func (self *Conf) read(filepath string) (err error) {
 		return err
 	}
 
-	err = nil
-
 	bytes := assert.Must(os.ReadFile(filepath))
 	err = yaml.Unmarshal(bytes, self)
 
 	if err == nil {
 		self.File = fs.NewNode(filepath, fs.File)
+		self.Home = os.ExpandEnv(self.Home)
+
+		for _, backup := range self.Backups {
+			backup.From = os.ExpandEnv(backup.From)
+			backup.To = os.ExpandEnv(backup.To)
+		}
 	}
 
 	return

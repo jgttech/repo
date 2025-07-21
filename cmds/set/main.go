@@ -2,7 +2,6 @@ package _set
 
 import (
 	"context"
-	"os"
 	"strings"
 
 	"github.com/jgttech/repo/src/cli"
@@ -28,7 +27,7 @@ func Command() *v3.Command {
 			if key != "" && value != "" {
 				switch key {
 				case "exports":
-					conf.Exports = os.ExpandEnv(value)
+					conf.Exports = value
 					conf.Save()
 				}
 			}
