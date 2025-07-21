@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/jgttech/repo/src/assert"
 	"github.com/jgttech/repo/src/errors"
@@ -64,6 +65,13 @@ func Extract(options ...archiveOption) (err error) {
 				err = errors.Errorf("Failed to extract directory:\n%s", name)
 			}
 		case tar.TypeReg:
+			dir := assert.Must(filepath.Abs(filepath.Dir(name)))
+			_, err := os.Stat(dir)
+
+			if os.IsNotExist(err) {
+				err = os.MkdirAll(dir, 0755)
+			}
+
 			asset, err := os.Create(name)
 
 			if err != nil {
