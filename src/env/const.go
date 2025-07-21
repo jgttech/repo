@@ -4,6 +4,7 @@ const (
 	CONST_PRD   = "0"
 	CONST_DEV   = "1"
 	CONST_BIN   = "repo"
+	CONST_BASE  = ".repocli"
 	CONST_DIR   = ".build"
 	CONST_LOCAL = ".local/bin"
 	CONST_CONF  = ".config/repocli"

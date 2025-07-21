@@ -2,11 +2,11 @@ package _import
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"strings"
 
 	"github.com/jgttech/repo/src/archive"
+	"github.com/jgttech/repo/src/env"
 	"github.com/jgttech/repo/src/errors"
 	v3 "github.com/urfave/cli/v3"
 )
@@ -42,7 +42,14 @@ func Command() *v3.Command {
 				archive.To(base),
 			)
 
-			fmt.Println("base:", base)
+			_, err = os.Stat(env.BUILD_DIR)
+
+			if os.IsNotExist(err) {
+				err = create(base)
+			} else {
+				err = swap(base)
+			}
+
 			return
 		},
 	}

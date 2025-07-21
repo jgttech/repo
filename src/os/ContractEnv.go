@@ -8,6 +8,11 @@ import (
 	"strings"
 )
 
+// Accepts a path and then injects the environment
+// variables that match the path, returning a string
+// that as the environment variables put BACK into
+// the string for use with things like config files
+// that use relative configurations.
 func ContractEnv(path string) (result string) {
 	vars := os.Environ()
 
