@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/jgttech/repo/src/assert"
+	"github.com/jgttech/repo/src/errors"
 	fsys "github.com/jgttech/repo/src/fs"
 )
 
@@ -26,12 +27,12 @@ func Create(options ...archiveOption) (err error) {
 	to := fsys.NewNode(archive.To)
 
 	if !from.Exists() {
-		err = fmt.Errorf("[archive] Archive can't be created from '%s'", from.Path)
+		err = errors.New(fmt.Sprintf("Failed to create archive: %s", from.Path))
 		return
 	}
 
 	if to.Exists() {
-		err = fmt.Errorf("[archive] Archive already exists for '%s'", to.Path)
+		err = errors.New(fmt.Sprintf("Archive already exists: %s", from.Path))
 		return
 	}
 

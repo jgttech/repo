@@ -2,11 +2,11 @@ package _import
 
 import (
 	"context"
+	"fmt"
+	"os"
 	"strings"
-	// "fmt"
-	// "os"
-	//
-	// "github.com/jgttech/repo/src/archive"
+
+	"github.com/jgttech/repo/src/archive"
 	"github.com/jgttech/repo/src/errors"
 	v3 "github.com/urfave/cli/v3"
 )
@@ -26,16 +26,23 @@ func Command() *v3.Command {
 				return
 			}
 
-			// if _, err := os.Stat(target); os.IsNotExist(err) {
-			// 	err = fmt.Errorf("The target file does not exist")
-			// 	return
-			// }
+			if _, err = os.Stat(target); os.IsNotExist(err) {
+				err = errors.Errorf("File does not exist: %s", target)
+				return
+			}
 
-			// archive.Extract(
-			//   archive.From(dir),
-			//   archive.To()
-			// )
+			base, err := os.MkdirTemp(os.TempDir(), "repocli-")
 
+			if err != nil {
+				return
+			}
+
+			archive.Extract(
+				archive.From(target),
+				archive.To(base),
+			)
+
+			fmt.Println(base)
 			return
 		},
 	}
