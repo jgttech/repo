@@ -34,7 +34,7 @@ func Protected(cmd *v3.Command) *v3.Command {
 
 	// We need to ensure that all the dependencies are
 	// installed in the system on ALL protected commands.
-	if err := os.HasDependencies(conf); err != nil {
+	if err := conf.HasDependencies(); err != nil {
 		cmd.Action = func(_ context.Context, _ *v3.Command) error {
 			return err
 		}

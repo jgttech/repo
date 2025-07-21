@@ -1,19 +1,19 @@
-package os
+package cli
 
 import (
 	"errors"
 	"fmt"
 	"path/filepath"
 
-	"github.com/jgttech/repo/src/cli"
 	"github.com/jgttech/repo/src/env"
+	"github.com/jgttech/repo/src/os"
 )
 
-func HasDependencies(conf *cli.Conf) (err error) {
+func (self *Conf) HasDependencies() (err error) {
 	missing := []string{}
 
-	for _, dep := range conf.Dependencies {
-		if !PackageInstalled(dep) {
+	for _, dep := range self.Dependencies {
+		if !os.PackageInstalled(dep) {
 			missing = append(missing, dep)
 		}
 	}

@@ -53,7 +53,7 @@ func Command() *v3.Command {
 			}
 
 			// Check dependencies and error on missing deps.
-			if err = _os.HasDependencies(conf); err != nil {
+			if err = conf.HasDependencies(); err != nil {
 				return
 			}
 
