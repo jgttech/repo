@@ -15,21 +15,26 @@
       <stop offset="100%" style="stop-color:#3a3a3a;stop-opacity:1" />
     </linearGradient>
 
-    <!-- Highlight gradient - same colors as background but adjusted for small highlights -->
-    <linearGradient id="highlightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6b46c1;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#9061d8;stop-opacity:1" />
+    <!-- Highlight gradient for overlay -->
+    <linearGradient id="highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
     </linearGradient>
+
+    <!-- Clip path to ensure highlight doesn't overlap borders -->
+    <clipPath id="clipInner">
+      <rect x="69" y="69" width="374" height="374" rx="49" ry="49"/>
+    </clipPath>
   </defs>
 
-  <!-- Outer gray border -->
+  <!-- Outer gray border - increased by 50% (was 18px thick, now 27px) -->
   <rect x="6" y="6" width="500" height="500" rx="112" ry="112" fill="url(#outerBorderGradient)"/>
 
-  <!-- Inner black border -->
-  <rect x="24" y="24" width="464" height="464" rx="94" ry="94" fill="#1a1a1a"/>
+  <!-- Inner black border - increased by 50% (was 18px thick, now 27px) -->
+  <rect x="33" y="33" width="446" height="446" rx="85" ry="85" fill="#1a1a1a"/>
 
   <!-- Main blue gradient background -->
-  <rect x="42" y="42" width="428" height="428" rx="76" ry="76" fill="url(#bgGradient)"/>
+  <rect x="69" y="69" width="374" height="374" rx="49" ry="49" fill="url(#bgGradient)"/>
 
   <!-- Git branching icon styled as 'r' -->
   <g transform="translate(256, 256)">
@@ -82,15 +87,8 @@
   </g>
 
   <!-- Top glossy highlight overlay - adjusted to not overlap borders -->
-  <path d="M 118 42 L 394 42 Q 470 42 470 118 L 470 240 L 42 240 L 42 118 Q 42 42 118 42 Z"
+  <path d="M 118 69 L 394 69 Q 443 69 443 118 L 443 150 L 69 150 L 69 118 Q 69 69 118 69 Z"
         fill="url(#highlight)"
         opacity="0.6"
         clip-path="url(#clipInner)"/>
-
-  <!-- Clip path to ensure highlight doesn't overlap borders -->
-  <defs>
-    <clipPath id="clipInner">
-      <rect x="42" y="42" width="428" height="428" rx="76" ry="76"/>
-    </clipPath>
-  </defs>
 </svg>
