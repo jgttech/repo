@@ -31,6 +31,7 @@ install:
   go mod tidy
   just run
   just sync
+  docker compose exec repo bash -c "bash $REPO_TMP/bin/docker/cli"
 
 # Updates the aqua CLI packages
 update:
