@@ -1,0 +1,15 @@
+services:
+  repo:
+    image: repo
+    build:
+      dockerfile: Dockerfile.arch
+    environment:
+      - TERM=xterm-256color
+      - REPO_TMP=$REPO_TMP
+      - REPO_HOME=$REPO_HOME
+    tty: true
+    stdin_open: true
+    command: bash -c "sleep infinity"
+    working_dir: /home/user
+    volumes:
+      - .:$REPO_TMP

@@ -1,0 +1,158 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient - purple with steel blue undertones -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2A1B5C;stop-opacity:1" />
+      <stop offset="35%" style="stop-color:#3F2A7A;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#5B3F9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7257B8;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Outer gray border gradient -->
+    <linearGradient id="outerBorderGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9a9a9a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5a5a5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3a3a3a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Highlight gradient for overlay -->
+    <linearGradient id="highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+
+    <!-- Animated glow gradient - bright with steel-blue purple harmony -->
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#E6DDFF;stop-opacity:0.6">
+        <animate attributeName="stop-opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="40%" style="stop-color:#A78BFA;stop-opacity:0.4">
+        <animate attributeName="stop-opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#6D59C7;stop-opacity:0.1">
+        <animate attributeName="stop-opacity" values="0.05;0.3;0.05" dur="3s" repeatCount="indefinite"/>
+      </stop>
+    </radialGradient>
+
+    <!-- Clip path to ensure highlight doesn't overlap borders -->
+    <clipPath id="clipInner">
+      <rect x="69" y="69" width="374" height="374" rx="49" ry="49"/>
+    </clipPath>
+
+    <!-- Blur filters for ultra-smooth glow effect -->
+    <filter id="ultraSoftGlow" x="-150%" y="-150%" width="400%" height="400%">
+      <feGaussianBlur stdDeviation="25" result="ultraSoftBlur"/>
+    </filter>
+
+    <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="18" result="softBlur"/>
+    </filter>
+
+    <filter id="mediumGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="mediumBlur"/>
+    </filter>
+  </defs>
+
+  <!-- Outer gray border - increased by 50% (was 18px thick, now 27px) -->
+  <rect x="6" y="6" width="500" height="500" rx="112" ry="112" fill="url(#outerBorderGradient)"/>
+
+  <!-- Inner black border - increased by 50% (was 18px thick, now 27px) -->
+  <rect x="33" y="33" width="446" height="446" rx="85" ry="85" fill="#1a1a1a"/>
+
+  <!-- Main blue gradient background -->
+  <rect x="69" y="69" width="374" height="374" rx="49" ry="49" fill="url(#bgGradient)"/>
+
+  <!-- Animated backglow effect - bright glow with steel-blue purple background -->
+  <g transform="translate(256, 256)">
+    <!-- Extra large outer glow with ultra-heavy blur -->
+    <circle cx="0" cy="0" r="180" fill="url(#glowGradient)" opacity="0.4" filter="url(#ultraSoftGlow)">
+      <animateTransform
+        attributeName="transform"
+        type="scale"
+        values="0.85;1.35;0.85"
+        dur="5s"
+        repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.6;0.2" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Large outer glow with heavy blur -->
+    <circle cx="0" cy="0" r="140" fill="#8B5CF6" opacity="0.25" filter="url(#softGlow)">
+      <animateTransform
+        attributeName="transform"
+        type="scale"
+        values="0.9;1.25;0.9"
+        dur="4s"
+        repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.15;0.4;0.15" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Medium inner glow with medium blur -->
+    <circle cx="0" cy="0" r="100" fill="#A78BFA" opacity="0.2" filter="url(#mediumGlow)">
+      <animate attributeName="opacity" values="0.1;0.35;0.1" dur="3.5s" repeatCount="indefinite"/>
+      <animateTransform
+        attributeName="transform"
+        type="scale"
+        values="0.85;1.15;0.85"
+        dur="3.5s"
+        repeatCount="indefinite"/>
+    </circle>
+    <!-- Soft inner core with gentle blur -->
+    <circle cx="0" cy="0" r="70" fill="#E6DDFF" opacity="0.15" filter="url(#mediumGlow)">
+      <animate attributeName="opacity" values="0.08;0.25;0.08" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Git branching icon styled as 'r' -->
+  <g transform="translate(256, 256)">
+    <!-- Shadow effect for lines -->
+    <g opacity="0.3" transform="translate(4, 4)" filter="blur(2px)">
+      <line x1="-50" y1="-90" x2="-50" y2="110" stroke="#000000" stroke-width="18" stroke-linecap="round"/>
+      <path d="M -50,-15 L -15,-50 C 35,-100 90,-100 90,-50 C 90,-25 90,-15 75,-15"
+            fill="none"
+            stroke="#000000"
+            stroke-width="18"
+            stroke-linecap="round"/>
+    </g>
+
+    <!-- Shadow effect for nodes -->
+    <g opacity="0.3" transform="translate(4, 4)" filter="blur(2px)">
+      <circle cx="-50" cy="-90" r="28" fill="#000000"/>
+      <circle cx="-50" cy="-15" r="28" fill="#000000"/>
+      <circle cx="-50" cy="110" r="28" fill="#000000"/>
+      <circle cx="75" cy="-15" r="28" fill="#000000"/>
+    </g>
+
+    <!-- Main vertical stem of 'r' -->
+    <line x1="-50" y1="-90" x2="-50" y2="110" stroke="#E8E0F5" stroke-width="18" stroke-linecap="round" opacity="1"/>
+
+    <!-- Curved branch that creates the 'r' shape - refined curve -->
+    <path d="M -50,-15 L -15,-50 C 35,-100 90,-100 90,-50 C 90,-25 90,-15 75,-15"
+          fill="none"
+          stroke="#E8E0F5"
+          stroke-width="18"
+          stroke-linecap="round"
+          opacity="1"/>
+
+    <!-- Top node (commit) -->
+    <circle cx="-50" cy="-90" r="28" fill="#E8E0F5" opacity="1"/>
+
+    <!-- Branch point node -->
+    <circle cx="-50" cy="-15" r="28" fill="#E8E0F5" opacity="1"/>
+
+    <!-- Bottom node -->
+    <circle cx="-50" cy="110" r="28" fill="#E8E0F5" opacity="1"/>
+
+    <!-- Branch end node - exactly inline with branch point -->
+    <circle cx="75" cy="-15" r="28" fill="#E8E0F5" opacity="1"/>
+
+    <!-- Inner dots for git commit detail - all same size -->
+    <circle cx="-50" cy="-90" r="9" fill="#3F2A7A"/>
+    <circle cx="-50" cy="-15" r="9" fill="#3F2A7A"/>
+    <circle cx="-50" cy="110" r="9" fill="#3F2A7A"/>
+    <circle cx="75" cy="-15" r="9" fill="#3F2A7A"/>
+  </g>
+
+  <!-- Top glossy highlight overlay - adjusted to not overlap borders -->
+  <path d="M 118 69 L 394 69 Q 443 69 443 118 L 443 150 L 69 150 L 69 118 Q 69 69 118 69 Z"
+        fill="url(#highlight)"
+        opacity="0.6"
+        clip-path="url(#clipInner)"/>
+</svg>
