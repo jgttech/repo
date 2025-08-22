@@ -1,30 +1,23 @@
 #!/usr/bin/env bash
-
-#
-# This is intended to be run from within
-# the development Docker container.
-#
+set -e
 
 vol="$REPO_TMP"
 base=$(eval echo "$REPO_HOME")
 
-# Remove the source dir, if it exists.
-[[ -d "$base" ]] && rm -rf $base;
+# What we want to copy from the volume.
+sources=(\
+  "bin" \
+  "cmds" \
+  "core" \
+  "test" \
+  "tui" \
+  "go.mod" \
+  "go.sum" \
+  "main.go" \
+)
 
-# Exclude specific directories
-rsync -av --delete \
-    --exclude='.aqua' \
-    --exclude='.docs' \
-    --exclude='.git' \
-    --exclude='.github' \
-    --exclude='bin' \
-    --exclude='.editorconfig' \
-    --exclude='.gitignore' \
-    --exclude='.golangci.yml' \
-    --exclude='Dockerfile.arch' \
-    --exclude='Justfile' \
-    --exclude='LICENSE' \
-    --exclude='aqua.yml' \
-    --exclude='compose.yml' \
-    --exclude='lefthook.yml' \
-    "$vol/" "$base/" &> /dev/null
+# Single removal and creation
+[[ -d "$base" ]] && rm -rf "$base"; mkdir -p "$base"
+
+# Batch copy with fewer syscalls
+(cd "$vol" && tar cf - "${sources[@]}" 2>/dev/null) | (cd "$base" && tar xf -)

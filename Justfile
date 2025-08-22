@@ -1,3 +1,4 @@
+set shell := ["bash", "-uc"]
 set export
 set dotenv-load
 
@@ -33,10 +34,21 @@ install:
   just sync
   docker compose exec repo bash -c "bash $REPO_TMP/bin/docker/cli"
 
+add *args='':
+  aqua generate -i
+  aqua install
+
+# Fuzzing finder for the installed packages.
+remove:
+  #!/usr/bin/env bash
+  pkg=$(cat aqua.yml | yq ".packages[].name" | fzf)
+  aqua remove "${pkg%@*}"
+
 # Updates the aqua CLI packages
 update:
   @echo "Updating system packages, please wait..."
   aqua update
+  rm -rf {{AQUA_ROOT_DIR}}
 
 @clean:
   -rm -rf {{AQUA_ROOT_DIR}}

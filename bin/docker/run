@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 STATE="$(docker compose ps --format=json repo | jq ".State" | tr -d '\"')"
 
 if [[ "$STATE" != "running" ]]; then

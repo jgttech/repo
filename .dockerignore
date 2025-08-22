@@ -1,0 +1,14 @@
+.aqua/
+.docs/
+.git/
+.github/
+.editorconfig
+.gitignore
+.golangci.yml
+Dockerfile.arch
+Justfile
+LICENSE
+README.md
+aqua.yml
+compose.yml
+lefthook.yml
