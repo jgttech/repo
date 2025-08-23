@@ -35,8 +35,6 @@ _runtime:
 
 _sync:
   #!/usr/bin/env bash
-  set -e
-
   docker compose exec repo bash -c '
     vol="$REPO_TMP"
     base=$(eval echo "$REPO_HOME")
