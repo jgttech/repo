@@ -96,6 +96,8 @@ add:
   set -e
   pkg=$(cat aqua.yml | yq ".packages[].name" | fzf)
   yq eval -i "del(.packages[] | select(.name == \"$pkg\"))" aqua.yml
+  rm -rf $AQUA_ROOT_DIR
+  aqua install
 
 connect:
   docker compose exec repo bash
