@@ -1,0 +1,8 @@
+[private]
+runtime:
+  #!/usr/bin/env bash
+  STATE="$(docker compose ps --format=json repo | jq ".State" | tr -d '\"')"
+
+  if [[ "$STATE" != "running" ]]; then
+    docker compose up repo -d
+  fi

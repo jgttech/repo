@@ -1,0 +1,25 @@
+[private]
+sync:
+  #!/usr/bin/env bash
+  docker compose exec repo bash -c '
+    vol="$REPO_TMP"
+    base=$(eval echo "$REPO_HOME")
+
+    # What we want to copy from the volume.
+    sources=(\
+      "bin" \
+      "cmds" \
+      "core" \
+      "test" \
+      "tui" \
+      "go.mod" \
+      "go.sum" \
+      "main.go" \
+    )
+
+    # Single removal and creation
+    [[ -d "$base" ]] && rm -rf "$base"; mkdir -p "$base"
+
+    # Batch copy with fewer syscalls
+    (cd "$vol" && tar cf - "${sources[@]}" 2>/dev/null) | (cd "$base" && tar xf -)
+  '
