@@ -94,8 +94,15 @@ add:
 @remove:
   #!/usr/bin/env bash
   set -e
+
   pkg=$(cat aqua.yml | yq ".packages[].name" | fzf)
   yq eval -i "del(.packages[] | select(.name == \"$pkg\"))" aqua.yml
+
+  if [ -z "$pkg" ]; then
+    echo "No package selected. Cancelled."
+    exit 0
+  fi
+
   rm -rf $AQUA_ROOT_DIR
   aqua install
 
