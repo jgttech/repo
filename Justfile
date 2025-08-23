@@ -91,8 +91,11 @@ add:
   aqua generate -i
   aqua install
 
-remove:
-  @echo "WIP"
+@remove:
+  #!/usr/bin/env bash
+  set -e
+  pkg=$(cat aqua.yml | yq ".packages[].name" | fzf)
+  yq eval --arg pkg "$pkg" 'del(.packages[] | select(.name == $pkg))' aqua.yml
 
 connect:
   docker compose exec repo bash
