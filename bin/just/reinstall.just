@@ -1,0 +1,1 @@
+reinstall: uninstall install

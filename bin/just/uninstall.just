@@ -7,7 +7,8 @@ uninstall:
 
   out=$(docker compose kill 2>&1)
 
-  if [[ "$out" == "no container to kill" ]]; then
+  # If output doesn't end with newline and matches the message
+  if [[ "$output" == "no container to kill" && "$output" != *$'\n' ]]; then
     echo ""
   fi
 
