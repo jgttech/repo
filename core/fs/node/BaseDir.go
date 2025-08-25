@@ -5,4 +5,4 @@ import (
 	"github.com/jgttech/repo/core/fs"
 )
 
-var BaseDir = fs.Node(env.OS_BASE)
+var BaseDir = fs.Node(env.OS_BASE, fs.AsDir)

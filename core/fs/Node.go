@@ -6,8 +6,7 @@ type INodeOption func(node *INode)
 
 func Node(path string, options ...INodeOption) (node *INode) {
 	node = &INode{path: path}
-
-	nodeSync(node)
+	node.Sync()
 
 	for option := range slices.Values(options) {
 		option(node)
