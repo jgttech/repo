@@ -15,9 +15,9 @@ func Command() *cli.Command {
 		Description: "Ensures all configuration and repositories exist.",
 		Action: func(ctx context.Context, c *cli.Command) error {
 			stateFile := node.StateFile
-			stateData := state.New()
-
 			stateFile.Ensure()
+
+			stateData := state.New()
 			fmt.Printf("%#v\n", stateData)
 
 			return nil
