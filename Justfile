@@ -4,6 +4,7 @@ set export
 set dotenv-load
 
 # Enviroment
+AQUA_REMOVE_MODE := "pl"
 AQUA_ROOT_DIR := ".aqua"
 PATH := ".aqua/bin:" + env_var("PATH")
 REPO_TMP := "/tmp/code"

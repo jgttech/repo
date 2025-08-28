@@ -13,3 +13,10 @@ uninstall:
   fi
 
   docker compose down --remove-orphans
+
+  # Remove the image, by ID.
+  id="$(docker images -a | grep "repo" | awk '{ print $3 }')"
+
+  if [[ ! -z "$id" ]]; then
+    docker rmi -f "$id"
+  fi
