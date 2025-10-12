@@ -2,13 +2,13 @@ package cliinstall
 
 import (
 	"context"
-	"repo/cli/core"
+	"repo/cli/core/env"
 
 	"github.com/urfave/cli/v3"
 )
 
 func Command() *cli.Command {
-	home, _ := core.GetInstallHome()
+	home, _ := env.GetInstallHome()
 
 	return &cli.Command{
 		Name:  "install",
@@ -18,7 +18,21 @@ func Command() *cli.Command {
 				return nil
 			}
 
-			return home.Create()
+			if err := home.Create(); err != nil {
+				return err
+			}
+
+			conf, err := env.GetConf()
+
+			if err != nil {
+				return err
+			}
+
+			if err = conf.Create(); err != nil {
+				return err
+			}
+
+			return nil
 		},
 	}
 }

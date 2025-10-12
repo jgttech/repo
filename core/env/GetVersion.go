@@ -1,4 +1,4 @@
-package core
+package env
 
 const version = "0.0.0"
 

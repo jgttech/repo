@@ -3,7 +3,7 @@ package cliversion
 import (
 	"context"
 	"fmt"
-	"repo/cli/core"
+	"repo/cli/core/env"
 
 	"github.com/urfave/cli/v3"
 )
@@ -13,7 +13,7 @@ func Command() *cli.Command {
 		Name:  "version",
 		Usage: "Display the CLI version",
 		Action: func(ctx context.Context, c *cli.Command) error {
-			fmt.Println(core.GetVersion())
+			fmt.Println(env.GetVersion())
 			return nil
 		},
 	}
