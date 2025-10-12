@@ -1,17 +1,10 @@
 package core
 
 import (
-	"log"
 	"path/filepath"
 	"repo/cli/core/node"
 )
 
-func GetInstallHome() *node.Node {
-	home, err := node.New(filepath.Join(GetHome(), ".repo"))
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	return home
+func GetInstallHome() (*node.Node, error) {
+	return node.New(filepath.Join(GetHome(), ".repo"), node.AsDir)
 }

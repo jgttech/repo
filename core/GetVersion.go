@@ -1,5 +1,7 @@
 package core
 
+const version = "0.0.0"
+
 func GetVersion() string {
-	return "0.0.0"
+	return version
 }

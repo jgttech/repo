@@ -2,6 +2,7 @@ package node
 
 import "os"
 
+type nodeOption func(*Node)
 type NodeType int
 
 const (

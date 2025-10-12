@@ -1,8 +1,11 @@
 package node
 
-import "os"
+import (
+	"os"
+	"slices"
+)
 
-func New(source string) (*Node, error) {
+func New(source string, options ...nodeOption) (*Node, error) {
 	var err error
 	node := &Node{}
 
@@ -10,13 +13,13 @@ func New(source string) (*Node, error) {
 	node.path = source
 	node.stat, err = os.Stat(source)
 
-	if node.stat.IsDir() {
+	if err == nil && node.stat.IsDir() {
 		node.nodeType = NODE_DIR
 	}
 
-	if os.IsNotExist(err) {
-		return nil, err
+	for option := range slices.Values(options) {
+		option(node)
 	}
 
-	return node, nil
+	return node, err
 }

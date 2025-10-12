@@ -8,7 +8,7 @@ import (
 )
 
 func Command() *cli.Command {
-	home := core.GetInstallHome()
+	home, _ := core.GetInstallHome()
 
 	return &cli.Command{
 		Name:  "install",
@@ -18,9 +18,7 @@ func Command() *cli.Command {
 				return nil
 			}
 
-			home.Create()
-
-			return nil
+			return home.Create()
 		},
 	}
 }
