@@ -1,4 +1,0 @@
-- [ ] Update `New` in `state` package to check for config file, after state instiation.
-  - [ ] If the config file exists, load that state into the instance.
-  - [ ] If the config file does NOT exist, just return the instantiated state.
-  - [ ] Optimize for the exsitence of the config, as initialization should rarely happen.

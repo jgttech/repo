@@ -1,14 +1,6 @@
 # Operating System Files
 # ======================
 
-# App
-state.yml
-.repocli/
-.repo-cli/
-.repo/
-.build/
-.aqua/
-
 # macOS
 .DS_Store
 .AppleDouble

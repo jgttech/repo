@@ -1,20 +1,20 @@
-package _version
+package cliversion
 
 import (
 	"context"
 	"fmt"
+	"repo/cli/core"
 
-	"github.com/jgttech/repo/core/env"
 	"github.com/urfave/cli/v3"
 )
 
 func Command() *cli.Command {
 	return &cli.Command{
-		Name:    "version",
-		Aliases: []string{"ver"},
-		Action: func(ctx context.Context, c *cli.Command) (err error) {
-			fmt.Println(env.VERSION)
-			return
+		Name:  "version",
+		Usage: "Display the CLI version",
+		Action: func(ctx context.Context, c *cli.Command) error {
+			fmt.Println(core.GetVersion())
+			return nil
 		},
 	}
 }

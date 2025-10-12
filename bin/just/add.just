@@ -1,3 +1,3 @@
-add:
-  aqua generate -i
-  just refresh
+add *args='':
+  aqua generate -i {{args}}
+  aqua install

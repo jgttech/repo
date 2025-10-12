@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+just repo $@
+
+# status="$(docker compose ps --format json)"
+#
+# if [[ -z "$status" ]]; then
+#   just start
+#   status="$(docker compose ps --format json)"
+# fi
+#
+# docker compose exec repo bash -c "cd /tmp/repo; go run main.go $@"

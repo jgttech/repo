@@ -1,9 +1,12 @@
 install:
-  echo "Installing, please wait..."
+  #!/usr/bin/env bash
   aqua install
   lefthook install
-  go mod download
-  go mod tidy
-  just runtime
-  just sync
-  just app
+  just start
+
+  for file in "$(pwd)/bin/dev"/*; do
+    bin="$(basename $file)"
+
+    [[ ! -e "$PROJECT_BIN/$bin" ]] && \
+      ln -s "../../../bin/dev/$bin" "$PROJECT_BIN/$bin"
+  done

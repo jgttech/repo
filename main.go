@@ -2,32 +2,21 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
+	cliinstall "repo/cli/cmds/install"
+	cliversion "repo/cli/cmds/version"
 
-	"github.com/jgttech/repo/cmds/install"
-	"github.com/jgttech/repo/cmds/self"
-	"github.com/jgttech/repo/cmds/version"
-	// "github.com/jgttech/repo/core/fs/node"
-	"github.com/jgttech/repo/core/log"
-	// "github.com/jgttech/repo/core/state"
-	"github.com/jgttech/repo/core/sys"
 	"github.com/urfave/cli/v3"
 )
 
 func main() {
-	log.Configure()
-	defer log.Cleanup()
-
-	// ctx := state.Load(node.StateFile)
-	sys.Healthcheck()
-
 	app := cli.Command{
-		EnableShellCompletion: true,
-		Name:                  "repo",
+		Name:  "repo",
+		Usage: "Git repository account manager",
 		Commands: []*cli.Command{
-			_version.Command(),
-			_install.Command(),
-			_self.Command(),
+			cliversion.Command(),
+			cliinstall.Command(),
 		},
 	}
 

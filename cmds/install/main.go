@@ -1,24 +1,24 @@
-package _install
+package cliinstall
 
 import (
 	"context"
-	"fmt"
+	"repo/cli/core"
 
-	"github.com/jgttech/repo/core/fs/node"
-	"github.com/jgttech/repo/core/state"
 	"github.com/urfave/cli/v3"
 )
 
 func Command() *cli.Command {
-	return &cli.Command{
-		Name:        "install",
-		Description: "Ensures all configuration and repositories exist.",
-		Action: func(ctx context.Context, c *cli.Command) error {
-			stateFile := node.StateFile
-			stateFile.Ensure()
+	home := core.GetInstallHome()
 
-			stateData := state.New()
-			fmt.Printf("%#v\n", stateData)
+	return &cli.Command{
+		Name:  "install",
+		Usage: "Install the 'repo' CLI",
+		Action: func(ctx context.Context, c *cli.Command) error {
+			if home.Exists() {
+				return nil
+			}
+
+			home.Create()
 
 			return nil
 		},
