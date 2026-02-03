@@ -3,3 +3,4 @@
 install:
   devbox install
   go mod download
+  docker compose up
