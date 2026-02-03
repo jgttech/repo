@@ -9,9 +9,9 @@ A multi-account repository management solution.
 
 ## Getting Started
 
+> [!TIP]
+> Run `just` (no arguments) to see what commands are available.
+
 ```bash
 just install
 ```
-
-> [!TIP]
-> Run `just` (no arguments) to see what commands are available.
