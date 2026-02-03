@@ -8,4 +8,4 @@ prompt directory context="Run the prompt against the entire repo.":
   prompt+="@docs/prompts/{{directory}}/README.md "
   prompt+="Do NOT add AI signatures or co-author attributions."
 
-  claude "$prompt" --allowedTools "Bash,Read,Edit,Write"
+  claude -p "$prompt" --allowedTools "Bash,Read,Edit,Write"
