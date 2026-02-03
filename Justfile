@@ -1,30 +1,11 @@
-# Settings
-set quiet
-set export
-set dotenv-load
+mod docker "bin/just/docker/.mod.just"
+mod claude "bin/just/claude/.mod.just"
 
-# Enviroment
-AQUA_REMOVE_MODE := "pl"
-AQUA_ROOT_DIR := ".aqua"
-PATH := ".aqua/bin:" + env_var("PATH")
-REPO_TMP := "/tmp/code"
-REPO_HOME := "$HOME/.code"
+import "bin/just/root/.mod.just"
 
-# Commands
-import 'bin/just/add.just'
-import 'bin/just/app.just'
-import 'bin/just/cli.just'
-import 'bin/just/connect.just'
-import 'bin/just/exec.just'
-import 'bin/just/install.just'
-import 'bin/just/ps.just'
-import 'bin/just/refresh.just'
-import 'bin/just/reinstall.just'
-import 'bin/just/reload.just'
-import 'bin/just/remove.just'
-import 'bin/just/runtime.just'
-import 'bin/just/sync.just'
-import 'bin/just/uninstall.just'
-import 'bin/just/update.just'
-
-default: install
+default:
+  just -l
+  echo ""
+  just -l docker
+  echo ""
+  just -l claude

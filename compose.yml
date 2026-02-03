@@ -1,15 +1,18 @@
 services:
-  repo:
+  archlinux:
     image: repo
     build:
-      dockerfile: Dockerfile.arch
-    environment:
-      - TERM=xterm-256color
-      - REPO_TMP=$REPO_TMP
-      - REPO_HOME=$REPO_HOME
+      dockerfile: Dockerfile.archlinux
+    user: user
+    working_dir: /workspace
+    command: sleep infinity
     tty: true
     stdin_open: true
-    command: bash -c "sleep infinity"
-    working_dir: /home/user
     volumes:
-      - .:$REPO_TMP
+      - .:/workspace:ro
+      - go-cache:/home/user/go
+      - go-build-cache:/home/user/.cache/go-build
+
+volumes:
+  go-cache: {}
+  go-build-cache: {}

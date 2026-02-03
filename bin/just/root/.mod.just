@@ -1,0 +1,5 @@
+import "../settings.just"
+import "../aliases.just"
+import "install.just"
+import "build.just"
+import "repo.just"

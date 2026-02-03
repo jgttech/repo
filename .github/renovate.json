@@ -1,6 +1,0 @@
-{
-  "extends": ["config:base"],
-  "aqua": {
-    "enabled": true
-  }
-}
