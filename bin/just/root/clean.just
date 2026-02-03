@@ -1,7 +1,18 @@
 # Clean up repo and/or packages.
 [group('project')]
 clean:
+  #!/usr/bin/env bash
+  set -euo pipefail
   echo "Cleaning, please wait..."
-  [[ -d ".devbox" ]] && rm -rf ".devbox"
+
+  # Clear the nix store
   devbox run -- nix store gc --extra-experimental-features nix-command
+
+  # Delete the .devbox dir
+  [[ -d ".devbox" ]] && rm -rf ".devbox"
+
+  # Remove the development container
+  just docker clean
+
   echo "Done"
+  exit 0

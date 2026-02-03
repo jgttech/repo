@@ -4,6 +4,8 @@
     "claude-code-bin@latest",
     "docker@latest",
     "docker-compose@latest",
-    "go@latest"
+    "go@latest",
+    "yq@latest",
+    "jq@latest"
   ]
 }

@@ -1,2 +1,5 @@
 import "../settings.just"
+import "clean.just"
+import "cli.just"
+import "exec.just"
 import "up.just"

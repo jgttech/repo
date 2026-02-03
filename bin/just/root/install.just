@@ -3,4 +3,5 @@
 install:
   devbox install
   go mod download
-  docker compose up
+  just docker up
+  just docker exec go mod download

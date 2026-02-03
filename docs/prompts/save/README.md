@@ -45,6 +45,7 @@ git diff --staged --quiet
 **Body** (optional): wrap at 72 cols, explain _what_ and _why_ (not _how_), 2-4 sentences max, blank line after description.
 
 **Footers** (optional):
+
 - `BREAKING CHANGE: <explanation>`
 - `Refs: #123`
 - `WIP: <filename>: <status>` — only if related to tracked WIP work
