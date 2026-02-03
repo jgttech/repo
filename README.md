@@ -15,3 +15,17 @@ A multi-account repository management solution.
 ```bash
 just install
 ```
+
+## Run Commands
+
+> To see all available CLI commands
+
+```bash
+just repo
+```
+
+> To run a CLI command
+
+```bash
+just repo [command]
+```
