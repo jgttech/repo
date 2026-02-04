@@ -1,6 +1,6 @@
 # Kills and removes the docker container.
 [group('docker')]
-clean:
+down:
   #!/usr/bin/env bash
   set -euo pipefail
   cfg="{{invocation_directory()}}/compose.yml"

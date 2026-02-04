@@ -12,7 +12,7 @@ clean:
   [[ -d ".devbox" ]] && rm -rf ".devbox"
 
   # Remove the development container
-  just docker clean
+  just docker down
 
   echo "Done"
   exit 0
