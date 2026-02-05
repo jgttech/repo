@@ -24,7 +24,7 @@ just install
 just repo
 ```
 
-> To run a CLI command
+> Example: `just repo version`
 
 ```bash
 just repo [command]
