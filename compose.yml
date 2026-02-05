@@ -10,6 +10,8 @@ services:
     stdin_open: true
     volumes:
       - .:/workspace:ro
+      - ./go.mod:/workspace/go.mod:rw
+      - ./go.sum:/workspace/go.sum:rw
       - go-cache:/home/user/go
       - go-build-cache:/home/user/.cache/go-build
 
